@@ -1,0 +1,31 @@
+
+
+#lower-menu{
+	position: absolute;
+	bottom: 0px;
+}
+
+.exit, .save{
+	width: 200px;
+	margin: 10px;
+	height: 45px;
+	font-size: 24px;
+}
+
+.tab{
+	
+}
+
+.tab-content{
+	padding-top: 25px;
+	width: 100%;
+	height: 40px;
+	text-align: center;
+}
+
+.tab-content>*{
+	display: inline;
+	width: 70px;
+	vertical-align:middle;
+	font-size: 32px;
+}
