@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ExerciseModel, ExerciseVO, SetVO } from 'src/app/models/Exercise';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-edit-exercise',
@@ -13,7 +14,8 @@ export class EditExerciseComponent implements OnInit {
   constructor(
 	private route: ActivatedRoute,
 	private router:Router,
-	private exerciseModel:ExerciseModel
+	private exerciseModel:ExerciseModel,
+	private location:Location
   ) { }
 
   exerciseName:String = "";
@@ -29,8 +31,8 @@ export class EditExerciseComponent implements OnInit {
   }
 
   back(){
-	this.router.navigate(['/menu']);
-  }
+	this.location.back();
+	}
 
   save(){
 	var additionalSets = this.sets - this.exercise.sets.length;
@@ -56,6 +58,10 @@ export class EditExerciseComponent implements OnInit {
 
   weightednessChanged(event:MatTabChangeEvent){
 	this.exercise.isBodyweight = event.index === 0;
+  }
+
+  freenessChanged(event:MatTabChangeEvent){
+	this.exercise.isFree = event.index === 0;
   }
 
   changeRep(num:number){

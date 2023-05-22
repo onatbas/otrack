@@ -1,0 +1,14 @@
+
+
+#lower-menu{
+	position: absolute;
+	bottom: 0px;
+}
+
+.save, .exit{
+	width: 200px;
+	margin: 10px;
+	height: 45px;
+	font-size: 24px;
+	
+}

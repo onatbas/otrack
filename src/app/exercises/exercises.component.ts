@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ExerciseModel, ExerciseVO } from '../models/Exercise';
 import { Router } from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-exercises',
@@ -11,7 +12,8 @@ export class ExercisesComponent implements OnInit {
 
   constructor(
 	private exerciseModel: ExerciseModel,
-	private router:Router
+	private router:Router,
+	private location:Location
 	) {
   }
 
@@ -25,8 +27,8 @@ export class ExercisesComponent implements OnInit {
   }
 
   back(){
-	this.router.navigate(['/menu']);
-  }
+	this.location.back();
+}
 
   edit(){
 	this.editMode = !this.editMode;

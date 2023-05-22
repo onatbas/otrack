@@ -60,6 +60,10 @@ import {MatTreeModule} from '@angular/material/tree';
 import {OverlayModule} from '@angular/cdk/overlay';
 
 import { FormsModule } from '@angular/forms';
+import { WorkoutsComponent } from './workouts/workouts.component';
+import { WorkoutListItemComponent } from './workouts/workout-list-item/workout-list-item.component';
+import { WorkoutModel } from './models/Workouts';
+import { EditWorkoutComponent } from './workouts/edit-workout/edit-workout.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +71,10 @@ import { FormsModule } from '@angular/forms';
     MenuComponent,
     ExercisesComponent,
     ExerciseListItemComponent,
-    EditExerciseComponent
+    EditExerciseComponent,
+    WorkoutsComponent,
+    WorkoutListItemComponent,
+    EditWorkoutComponent
   ],
   imports: [
 	FormsModule,
@@ -123,7 +130,7 @@ import { FormsModule } from '@angular/forms';
 
   ],
   providers: [
-	ExerciseModel
+	ExerciseModel, WorkoutModel
   ],
   bootstrap: [AppComponent]
 })

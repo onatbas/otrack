@@ -4,10 +4,11 @@
 	</button>
 
 	<mat-form-field>
-		<input matInput [(ngModel)]="exercise.name">
+		<input matInput [(ngModel)]="workout.name">
 	</mat-form-field>
 </mat-toolbar>
 
+<!--
 <br>
 <mat-tab-group mat-stretch-tabs="true" [selectedIndex]="exercise.isReps ? 0 : 1" (selectedTabChange)="repsChanged($event)">
 	<mat-tab class="tab" label="REPS"><div class="tab-content">
@@ -41,13 +42,12 @@
 	<mat-tab class="tab" label="SINGLE"><div class="tab-content">
 		</div></mat-tab>
 	<mat-tab class="tab" label="MULTI SET"><div class="tab-content">
-	<!--<button (click)="changeSets(-1)" mat-icon-button><mat-icon>remove </mat-icon></button>-->	
 		<input matInput [(ngModel)]="sets"><span>sets</span>
 		<button (click)="changeSets(1)" mat-icon-button><mat-icon>add</mat-icon></button>
 	</div></mat-tab>
 </mat-tab-group>
 
-
+-->
   
 <mat-toolbar id="lower-menu">
 	<button (click)="save()" class="save" mat-stroked-button>Save</button>
