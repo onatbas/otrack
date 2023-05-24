@@ -7,8 +7,8 @@ import { WorkoutsComponent } from './workouts/workouts.component';
 import { EditWorkoutComponent } from './workouts/edit-workout/edit-workout.component';
 
 const routes: Routes = [
-	{ path: '', redirectTo: '/menu', pathMatch: 'full' },
-	{ path: 'menu',  component: MenuComponent },
+	{ path: '',  component: MenuComponent },
+	{ path: '/menu', redirectTo: '', pathMatch: 'full' },
 	{ path: 'exercises', component: ExercisesComponent},
 	{ path: 'workouts', component: WorkoutsComponent},
 	{ path: 'editExercise', component: EditExerciseComponent},
