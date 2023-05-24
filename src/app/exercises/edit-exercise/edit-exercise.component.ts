@@ -2,80 +2,92 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ExerciseModel, ExerciseVO, SetVO } from 'src/app/models/Exercise';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
+import { WorkoutModel } from 'src/app/models/Workouts';
 
 @Component({
-  selector: 'app-edit-exercise',
-  templateUrl: './edit-exercise.component.html',
-  styleUrls: ['./edit-exercise.component.css']
+	selector: 'app-edit-exercise',
+	templateUrl: './edit-exercise.component.html',
+	styleUrls: ['./edit-exercise.component.css']
 })
 export class EditExerciseComponent implements OnInit {
 
-  constructor(
-	private route: ActivatedRoute,
-	private router:Router,
-	private exerciseModel:ExerciseModel,
-	private location:Location
-  ) { }
+	constructor(
+		private route: ActivatedRoute,
+		private router: Router,
+		private exerciseModel: ExerciseModel,
+		private workoutModel: WorkoutModel,
+		private location: Location
+	) { }
 
-  exerciseName:String = "";
-  sets:number = 0;
-  exercise:ExerciseVO = new ExerciseVO();
+	exerciseName: String = "";
+	sets: number = 0;
+	exercise: ExerciseVO = new ExerciseVO();
+	instanced:boolean = false;
 
-  ngOnInit(): void {
-	this.route.params.subscribe(params => {
-		this.exercise = this.exerciseModel.getExerciseByName(params['name']);
-		this.exerciseName = this.exercise.name;
-		this.sets = this.exercise.sets.length;
- 	 });
-  }
+	ngOnInit(): void {
+		this.route.params.subscribe(params => {
+			this.instanced = params['instanced'];
+			console.log(this.instanced)
+			if (this.instanced)
+				this.exercise = this.workoutModel.getExerciseInstance(params['id']);
+			else
+				this.exercise = this.exerciseModel.getExerciseByName(params['name']);
 
-  back(){
-	this.location.back();
+			this.exerciseName = this.exercise.name;
+			this.sets = this.exercise.sets.length;
+		});
 	}
 
-  save(){
-	var additionalSets = this.sets - this.exercise.sets.length;
-	var set:SetVO = {
-		weight: this.exercise.weightDefault,
-		reps: this.exercise.repsDefault
+	back() {
+		this.location.back();
 	}
-	while (additionalSets-- > 0){
-		this.exercise.sets.push(set);
+
+	save() {
+		var additionalSets = this.sets - this.exercise.sets.length;
+		var set: SetVO = new SetVO();
+		set.weight = this.exercise.weightDefault;
+		set.reps = this.exercise.repsDefault;
+
+		while (additionalSets-- > 0) {
+			this.exercise.sets.push(set);
+		}
+		if (this.instanced)
+			this.workoutModel.setExerciseInstance(this.exercise.id, this.exercise);
+		else
+			this.exerciseModel.updateExercise(this.exercise.name, this.exercise);
 	}
-	this.exerciseModel.updateExercise(this.exercise.name, this.exercise);
-  }
 
-  delete(){
-	this.exerciseModel.deleteExercise(this.exerciseName);
-	this.back();
-  }
+	delete() {
+		this.exerciseModel.deleteExercise(this.exerciseName);
+		this.back();
+	}
 
-  repsChanged(event:MatTabChangeEvent){
-	this.exercise.isReps = event.index === 0;
-	this.exercise.isDuration = !this.exercise.isReps;
-  }
+	repsChanged(event: MatTabChangeEvent) {
+		this.exercise.isReps = event.index === 0;
+		this.exercise.isDuration = !this.exercise.isReps;
+	}
 
-  weightednessChanged(event:MatTabChangeEvent){
-	this.exercise.isBodyweight = event.index === 0;
-  }
+	weightednessChanged(event: MatTabChangeEvent) {
+		this.exercise.isBodyweight = event.index === 0;
+	}
 
-  freenessChanged(event:MatTabChangeEvent){
-	this.exercise.isFree = event.index === 0;
-  }
+	freenessChanged(event: MatTabChangeEvent) {
+		this.exercise.isFree = event.index === 0;
+	}
 
-  changeRep(num:number){
-	this.exercise.repsDefault += num;
-  }
-  changeDur(num:number){
-	this.exercise.durationDefault += num;
-  }
+	changeRep(num: number) {
+		this.exercise.repsDefault += num;
+	}
+	changeDur(num: number) {
+		this.exercise.durationDefault += num;
+	}
 
-  changeSets(num:number){
-	this.sets += num;
-  }
+	changeSets(num: number) {
+		this.sets += num;
+	}
 
-  changeWeight(num:number){
-	this.exercise.weightDefault += num;
-  }
+	changeWeight(num: number) {
+		this.exercise.weightDefault += num;
+	}
 }

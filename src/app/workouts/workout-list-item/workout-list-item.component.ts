@@ -15,6 +15,7 @@ export class WorkoutListItemComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+	
   }
 
   @Input() workout:any;

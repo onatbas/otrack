@@ -64,6 +64,8 @@ import { WorkoutsComponent } from './workouts/workouts.component';
 import { WorkoutListItemComponent } from './workouts/workout-list-item/workout-list-item.component';
 import { WorkoutModel } from './models/Workouts';
 import { EditWorkoutComponent } from './workouts/edit-workout/edit-workout.component';
+import { WorkoutSetComponent } from './workouts/edit-workout/workout-set/workout-set.component';
+import { WorkoutSetExerciseItemComponent } from './workouts/edit-workout/workout-set/workout-set-exercise-item/workout-set-exercise-item.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +76,9 @@ import { EditWorkoutComponent } from './workouts/edit-workout/edit-workout.compo
     EditExerciseComponent,
     WorkoutsComponent,
     WorkoutListItemComponent,
-    EditWorkoutComponent
+    EditWorkoutComponent,
+    WorkoutSetComponent,
+    WorkoutSetExerciseItemComponent
   ],
   imports: [
 	FormsModule,

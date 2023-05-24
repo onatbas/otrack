@@ -1,0 +1,16 @@
+.name{
+	width: 100%;
+}
+
+.icons{
+	width: 250px;
+	text-align: right;
+	margin: 0px;
+	padding: 0px;
+	position: absolute;
+}
+
+.icons>*{
+	margin: 0px;
+	padding: 0px;
+}

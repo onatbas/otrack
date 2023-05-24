@@ -3,53 +3,34 @@
 		<mat-icon>keyboard_backspace</mat-icon>
 	</button>
 
-	<mat-form-field>
+	<mat-form-field class="title">
 		<input matInput [(ngModel)]="workout.name">
 	</mat-form-field>
+
+	<button (click)="edit()" mat-icon-button>
+		<mat-icon>edit</mat-icon>
+	</button>
 </mat-toolbar>
 
-<!--
-<br>
-<mat-tab-group mat-stretch-tabs="true" [selectedIndex]="exercise.isReps ? 0 : 1" (selectedTabChange)="repsChanged($event)">
-	<mat-tab class="tab" label="REPS"><div class="tab-content">
-		<button (click)="changeRep(-1)" mat-icon-button><mat-icon>remove </mat-icon></button>
-		<input matInput [(ngModel)]="exercise.repsDefault"><span>x</span>
-		<button (click)="changeRep(1)" mat-icon-button><mat-icon>add</mat-icon></button>
-	</div></mat-tab>
-	<mat-tab class="tab" label="DURATION"><div class="tab-content">
-		<button (click)="changeDur(-1)" mat-icon-button><mat-icon>remove </mat-icon></button>
-		<input matInput [(ngModel)]="exercise.durationDefault"><span>sec</span>
-		<button (click)="changeDur(1)" mat-icon-button><mat-icon>add</mat-icon></button>
-	</div></mat-tab>
-  </mat-tab-group>
+<div id="content">
+
+	<br>
+	<app-workout-set *ngFor="let set of workout.sets" [set]="set" (deleteSet)="deleteSet($event)"
+		[editMode]="editMode"></app-workout-set>
 
 
-  
-<br>
-<mat-tab-group mat-stretch-tabs="true" [selectedIndex]="exercise.isBodyweight ? 0 : 1" (selectedTabChange)="weightednessChanged($event)">
-	<mat-tab class="tab" label="BODYWEIGHT"><div class="tab-content">
-		</div></mat-tab>
-	<mat-tab class="tab" label="WEIGHTED"><div class="tab-content">
-		<button (click)="changeWeight(-1)" mat-icon-button><mat-icon>remove </mat-icon></button>
-		<input matInput [(ngModel)]="exercise.weightDefault"><span>kg</span>
-		<button (click)="changeWeight(1)" mat-icon-button><mat-icon>add</mat-icon></button>
-	</div></mat-tab>
-</mat-tab-group>
+	<br>
 
-
-<br>
-<mat-tab-group mat-stretch-tabs="true" [selectedIndex]="exercise.isFree ? 0 : 1" (selectedTabChange)="freenessChanged($event)">
-	<mat-tab class="tab" label="SINGLE"><div class="tab-content">
-		</div></mat-tab>
-	<mat-tab class="tab" label="MULTI SET"><div class="tab-content">
-		<input matInput [(ngModel)]="sets"><span>sets</span>
-		<button (click)="changeSets(1)" mat-icon-button><mat-icon>add</mat-icon></button>
-	</div></mat-tab>
-</mat-tab-group>
-
--->
-  
-<mat-toolbar id="lower-menu">
+	<div class="add" *ngIf="editMode" (click)="addSet()">
+		<button mat-stroked-button>Add <mat-icon>add</mat-icon></button>
+	</div>
+</div>
+<mat-toolbar id="lower-menu" *ngIf="editMode">
 	<button (click)="save()" class="save" mat-stroked-button>Save</button>
 	<button (click)="delete()" class="exit" mat-stroked-button>Delete</button>
+</mat-toolbar>
+
+
+<mat-toolbar id="lower-menu" *ngIf="!editMode">
+	<button (click)="start()" class="save" mat-stroked-button>Start</button>
 </mat-toolbar>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { WorkoutModel, WorkoutVO } from 'src/app/models/Workouts';
+import { SetVO, WorkoutModel, WorkoutVO } from 'src/app/models/Workouts';
 import {Location} from '@angular/common';
 
 @Component({
@@ -15,6 +15,8 @@ export class EditWorkoutComponent implements OnInit {
 	private route:ActivatedRoute,
 	private workoutModel:WorkoutModel
   ) { }
+
+  editMode:boolean = false;
 
   ngOnInit(): void {
 	this.route.params.subscribe(params => {
@@ -38,4 +40,21 @@ export class EditWorkoutComponent implements OnInit {
   back(){
 	this.location.back();
   }
+
+  edit(){
+	this.editMode = !this.editMode;
+  }
+
+  deleteSet(name:String){
+	this.workout.sets = this.workout.sets.filter(set=>set.name !== name);
+  }
+
+  addSet(){
+	this.workout.sets.push(new SetVO());
+  }
+
+  start(){
+	
+  }
 }
+

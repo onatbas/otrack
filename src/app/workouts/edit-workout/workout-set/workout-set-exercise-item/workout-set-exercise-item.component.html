@@ -1,0 +1,21 @@
+<mat-divider></mat-divider>
+<mat-list-item>
+	<span class="name">{{setItem.name}}</span>
+	<span class="icons" *ngIf="setItem.isFree && !editMode">
+		{{setItem.isReps ? (setItem.repsDefault + "x" ) : (setItem.durationDefault + " sec") }}
+
+	</span>
+
+	<span class="icons" *ngIf="!setItem.isFree && !editMode">
+		{{setItem.sets.length}} subsets
+	</span>
+
+	<span class="icons" *ngIf="editMode">
+		<button (click)="delete()" mat-icon-button><mat-icon>delete</mat-icon></button>
+		<button (click)="edit()" mat-icon-button><mat-icon>edit</mat-icon></button>
+		<button mat-icon-button><mat-icon>arrow_upward</mat-icon></button>
+		<button mat-icon-button><mat-icon>arrow_downward</mat-icon></button>
+	</span>
+
+
+</mat-list-item>
