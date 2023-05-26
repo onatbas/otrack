@@ -30,6 +30,8 @@ export class WorkoutListItemComponent implements OnInit {
   }
 
   info(){
-
+	var state = { workout: this.workout,
+	stages: this.workout.archive};
+	this.router.navigate(['/successWorkout', {state: JSON.stringify(state)}]);
   }
 }

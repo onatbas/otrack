@@ -27,7 +27,4 @@ export class MenuComponent implements OnInit {
 	this.router.navigate(['/workouts']);
   }
 
-  execute():void{
-	this.router.navigate(['/executeWorkout',]);
-  }
 }

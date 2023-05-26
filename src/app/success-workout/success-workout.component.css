@@ -1,0 +1,43 @@
+.set{
+	margin: 10px;
+}
+
+.exerciseName{
+	font-size: 22px !important;
+	font-style: italic !important;
+	font-weight: bold !important;
+}
+
+.exercise span{
+	font-style: italic;
+}
+
+.subset{
+}
+
+.fail{
+	border: 1px solid red;
+	background-color: brown;
+}
+
+.success{
+	background-color: green;
+}
+
+.time{
+	display: block;
+	width: 100%;
+	text-align: right;
+	font-weight: bold;
+}
+
+.statistics span{
+	font-size: 22px;
+	font-style: italic;
+}
+
+
+#content{
+	height: 100%;
+	overflow: scroll;
+}

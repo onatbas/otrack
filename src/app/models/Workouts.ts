@@ -3,6 +3,7 @@ import { ExerciseModel, ExerciseVO } from "./Exercise";
 import { makeid } from "./randomid";
 import { OnInit } from "@angular/core";
 import { Injectable } from '@angular/core';
+import { WorkoutStateStageInfo } from "../execute-workout/WorkoutState";
 
 export class SetVO {
 	name:String = "";
@@ -31,6 +32,7 @@ export class SetVO {
 export class WorkoutVO {
 	name:String = "";
 	sets:Array<SetVO> = [];
+	archive: Array<WorkoutStateStageInfo> = [];
 
 
 	static from(o:any):WorkoutVO{
@@ -39,6 +41,8 @@ export class WorkoutVO {
 		
 		if (o.sets)
 			s.sets = o.sets.map((set:any) => SetVO.from(set));
+		if (o.archive)
+			s.archive = o.archive.map((archived:any) => WorkoutStateStageInfo.from(archived));
 		return s;
 	}
 }

@@ -5,12 +5,12 @@
 	<span>Exercises</span>
 </mat-toolbar>
 
-
+<div id="content">
   <mat-list>
 	<app-exercise-list-item *ngFor="let exercise of exercises" [exercise]="exercise" [edit]="editMode">
 	</app-exercise-list-item>
   </mat-list>
-
+</div>
 
   <mat-toolbar id="lower-menu">
 	<button (click)="edit()" class="edit" mat-stroked-button>Edit</button>

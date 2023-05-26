@@ -30,7 +30,7 @@
 		</div></mat-tab>
 	<mat-tab class="tab" label="WEIGHTED"><div class="tab-content">
 		<button (click)="changeWeight(-1)" mat-icon-button><mat-icon>remove </mat-icon></button>
-		<input matInput [(ngModel)]="exercise.weightDefault"><span>kg</span>
+		<input matInput  matInput matNativeControl type="number"  [(ngModel)]="exercise.weightDefault"><span>kg</span>
 		<button (click)="changeWeight(1)" mat-icon-button><mat-icon>add</mat-icon></button>
 	</div></mat-tab>
 </mat-tab-group>
@@ -42,7 +42,7 @@
 		</div></mat-tab>
 	<mat-tab class="tab" label="MULTI SET"><div class="tab-content">
 	<!--<button (click)="changeSets(-1)" mat-icon-button><mat-icon>remove </mat-icon></button>-->	
-		<input matInput [(ngModel)]="sets"><span>sets</span>
+		<input matInput matNativeControl type="number" [(ngModel)]="exercise.sets"><span>sets</span>
 		<button (click)="changeSets(1)" mat-icon-button><mat-icon>add</mat-icon></button>
 	</div></mat-tab>
 </mat-tab-group>

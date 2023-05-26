@@ -22,7 +22,7 @@
 			<div class="repChange incrementModule">
 				<button [style.visibility]="!currentExercise.isReps" (click)="addReps(-1)" mat-icon-button><mat-icon>remove</mat-icon></button>
 				<button [style.visibility]="!currentExercise.isReps" (click)="addReps(+1)" mat-icon-button><mat-icon>add</mat-icon></button>
-				<div class="incrementModuleText"><span>{{(currentExercise.isReps || currentExercise.sets.length > 0) ?
+				<div class="incrementModuleText"><span>{{(currentExercise.isReps || currentExercise.sets > 0) ?
 						currentExercise.repsDefault + "x" : (currentExercise.durationDefault + currentStage.start -
 						currentStage.time ) + "s" }}</span></div>
 			</div>

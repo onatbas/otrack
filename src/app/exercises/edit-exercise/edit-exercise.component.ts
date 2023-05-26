@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ExerciseModel, ExerciseVO, SetVO } from 'src/app/models/Exercise';
+import { ExerciseModel, ExerciseVO } from 'src/app/models/Exercise';
 import { Location } from '@angular/common';
 import { WorkoutModel } from 'src/app/models/Workouts';
 
@@ -21,7 +21,6 @@ export class EditExerciseComponent implements OnInit {
 	) { }
 
 	exerciseName: String = "";
-	sets: number = 0;
 	exercise: ExerciseVO = new ExerciseVO();
 	instanced:boolean = false;
 
@@ -35,7 +34,6 @@ export class EditExerciseComponent implements OnInit {
 				this.exercise = this.exerciseModel.getExerciseByName(params['name']);
 
 			this.exerciseName = this.exercise.name;
-			this.sets = this.exercise.sets.length;
 		});
 	}
 
@@ -44,14 +42,6 @@ export class EditExerciseComponent implements OnInit {
 	}
 
 	save() {
-		var additionalSets = this.sets - this.exercise.sets.length;
-		var set: SetVO = new SetVO();
-		set.weight = this.exercise.weightDefault;
-		set.reps = this.exercise.repsDefault;
-
-		while (additionalSets-- > 0) {
-			this.exercise.sets.push(set);
-		}
 		if (this.instanced)
 			this.workoutModel.setExerciseInstance(this.exercise.id, this.exercise);
 		else
@@ -84,7 +74,7 @@ export class EditExerciseComponent implements OnInit {
 	}
 
 	changeSets(num: number) {
-		this.sets += num;
+		this.exercise.sets += num;
 	}
 
 	changeWeight(num: number) {

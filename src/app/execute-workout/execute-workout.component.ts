@@ -22,6 +22,11 @@ export class ExecuteWorkoutComponent implements OnInit {
 	nextText: String = "";
 	success: boolean = true;
 	final:boolean = false;
+
+	successes:{ [key: string]: any[] } = {}; // Define successes as an object with string keys and array values
+
+	//map. id to success array.
+	
 	state: WorkoutState = WorkoutState.from({
 		workout: {
 			name: "Dummy Workout",
@@ -77,7 +82,6 @@ export class ExecuteWorkoutComponent implements OnInit {
 				this.state = WorkoutState.from(JSON.parse(params['state']));
 			}
 
-			console.log("Just started: ", JSON.stringify(this.state.stages));
 			if (this.state.stages.length>0)
 				this.currentStage = this.state.stages[this.state.stages.length-1];
 			else
@@ -119,6 +123,8 @@ export class ExecuteWorkoutComponent implements OnInit {
 	}
 
 	proceed() {
+		this.successes[this.currentExercise.id.toString()].push(this.success);
+
 		for (let i in this.state.workout.sets) {
 			var sets = this.state.workout.sets[i];
 			for (let j in sets.exercises) {
@@ -127,16 +133,9 @@ export class ExecuteWorkoutComponent implements OnInit {
 					this.state.workout.sets[i].exercises[j].weightDefault = this.currentExercise.weightDefault;
 					this.state.workout.sets[i].exercises[j].repsDefault = this.currentExercise.repsDefault;
 					//					return;
+					this.state.workout.sets[i].exercises[j].successes = this.successes[this.currentExercise.id.toString()];
 				}
 
-				for (let k in exercises.sets) {
-					if (exercises.sets[k].id == this.currentExercise.id) {
-						this.state.workout.sets[i].exercises[j].sets[k].success = this.success;
-						this.state.workout.sets[i].exercises[j].sets[k].reps = this.currentExercise.repsDefault;
-						this.state.workout.sets[i].exercises[j].sets[k].weight = this.currentExercise.weightDefault;
-						//						return;
-					}
-				}
 			}
 		}
 
@@ -175,20 +174,18 @@ export class ExecuteWorkoutComponent implements OnInit {
 		var exercises_list: Array<ExerciseVO> = [];
 
 		for (let i in this.state.workout.sets) {
-			const _exercises = this.state.workout.sets[i].exercises;
 			for (let x = 0; x < this.state.workout.sets[i].repeats; x++)
-				for (let k in _exercises) {
-					const _exercise = _exercises[k];
+				for (let k in this.state.workout.sets[i].exercises) {
+					if (stageNum == 0 )
+					this.state.workout.sets[i].exercises[k].successes = [];
+					const _exercise = this.state.workout.sets[i].exercises[k];
+					this.successes[_exercise.id.toString()] =  _exercise.successes;
 					if (_exercise.isFree) {
 						exercises_list.push(_exercise);
 					} else {
-						for (let numSets in _exercise.sets) {
+						for (let numSets=0; numSets< _exercise.sets; numSets++) {
 							exercises_list.push(ExerciseVO.from({
 								..._exercise,
-								isReps: true,
-								id: _exercise.sets[numSets].id,
-								weightDefault: _exercise.sets[numSets].weight,
-								repsDefault: _exercise.sets[numSets].reps
 							}));
 						}
 					}
