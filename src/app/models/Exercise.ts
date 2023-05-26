@@ -6,6 +6,7 @@ import { WorkoutModel } from "./Workouts";
 export class SetVO{
 	weight: number = 10;
 	reps: number = 12;
+	success: boolean = true;
 
 	id:String = "";
 	constructor(){
@@ -63,9 +64,16 @@ export class ExerciseVO{
 
 	 static from(o:any):ExerciseVO{
 		var s = new ExerciseVO();
-		for (let key in o){
-			Object(s)[key] = o[key];
-		}
+
+		s.id = o.id;
+		s.name = o.name;
+		s.isReps = o.isReps;
+		s.isDuration = o.isDuration;
+		s.repsDefault = o.repsDefault;
+		s.durationDefault = o.durationDefault;
+		s.isBodyweight = o.isBodyweight;
+		s.weightDefault = o.weightDefault;
+		s.isFree = o.isFree;
 
 		if (o.sets)
 			s.sets = o.sets.map((set:any) => SetVO.from(set));

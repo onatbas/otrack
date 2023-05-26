@@ -12,12 +12,12 @@
 <mat-tab-group mat-stretch-tabs="true" [selectedIndex]="exercise.isReps ? 0 : 1" (selectedTabChange)="repsChanged($event)">
 	<mat-tab class="tab" label="REPS"><div class="tab-content">
 		<button (click)="changeRep(-1)" mat-icon-button><mat-icon>remove </mat-icon></button>
-		<input matInput [(ngModel)]="exercise.repsDefault"><span>x</span>
+		<input matNativeControl type="number" matInput [(ngModel)]="exercise.repsDefault"><span>x</span>
 		<button (click)="changeRep(1)" mat-icon-button><mat-icon>add</mat-icon></button>
 	</div></mat-tab>
 	<mat-tab class="tab" label="DURATION"><div class="tab-content">
 		<button (click)="changeDur(-1)" mat-icon-button><mat-icon>remove </mat-icon></button>
-		<input matInput [(ngModel)]="exercise.durationDefault"><span>sec</span>
+		<input matInput  matNativeControl type="number" [(ngModel)]="exercise.durationDefault"><span>sec</span>
 		<button (click)="changeDur(1)" mat-icon-button><mat-icon>add</mat-icon></button>
 	</div></mat-tab>
   </mat-tab-group>

@@ -15,20 +15,20 @@ export class ExecuteWorkoutComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
-		private location:Location
+		private location: Location
 	) { }
 
-	percentage:number = 0;
-	nextText:String = "";
-	success:boolean = true;
-
+	percentage: number = 0;
+	nextText: String = "";
+	success: boolean = true;
+	final:boolean = false;
 	state: WorkoutState = WorkoutState.from({
 		workout: {
 			name: "Dummy Workout",
 			sets: [
 				{
 					name: "Set1",
-					repeats: 1,
+					repeats: 2,
 					exercises: [
 						ExerciseVO.from({
 							name: "Bench Press",
@@ -44,7 +44,7 @@ export class ExecuteWorkoutComponent implements OnInit {
 							}]
 						})
 					]
-				},{
+				}, {
 					name: "set2",
 					repeats: 1,
 					exercises: [
@@ -60,87 +60,155 @@ export class ExecuteWorkoutComponent implements OnInit {
 				}
 			]
 		},
-		stages: [
-			{
-				time: 192,
-				start: 192,
-				end: 266
-			},
-			{
-				time: 266,
-				start: 242,
-				end: 0
-			}
-		]
+		stages: []
 	});
 
 	currentStage: WorkoutStateStageInfo = new WorkoutStateStageInfo;
 	currentExercise: ExerciseVO = new ExerciseVO;
 
+	timer: any = null;
+
 	ngOnInit(): void {
 		this.route.params.subscribe(params => {
-			//this.state = params['state'];
+			console.log(params['state']);
+			if (! params['state']){
+				this.location.back();
+			}else{
+				this.state = WorkoutState.from(JSON.parse(params['state']));
+			}
 
-			this.currentStage = this.state.stages[0];
-			this.processStage(2);
+			console.log("Just started: ", JSON.stringify(this.state.stages));
+			if (this.state.stages.length>0)
+				this.currentStage = this.state.stages[this.state.stages.length-1];
+			else
+				this.state.stages.push(this.currentStage);
+			this.processStage(this.state.stages.length - 1);
 
 			console.log(this.currentStage);
 
-			setInterval(()=>{this.currentStage.time++; this.checktime()}, 1000);
+			if (this.timer == null)
+				this.timer = setInterval(() => {
+					this.currentStage.time++;
+					this.checktime();
+				}, 1000);
 		});
 	}
 
-	checktime(){
+	checktime() {
 
 	}
 
-	back(){
+	back() {
 		this.location.back();
 	}
-	
-	cancel(){
 
+	cancel() {
+		this.router.navigate(['/menu']);
 	}
 
-	toggleSuccess(){
+	toggleSuccess() {
 		this.success = !this.success;
 	}
-	
-	addWeight(num:number){
 
+	addWeight(num: number) {
+		this.currentExercise.weightDefault += num;
 	}
 
-	
+	addReps(num: number) {
+		this.currentExercise.repsDefault += num;
+	}
 
-	processStage(stageNum: number) {
-
-		var exercises_list: Array<ExerciseVO> = [];
-
+	proceed() {
 		for (let i in this.state.workout.sets) {
-			const _exercises = this.state.workout.sets[i].exercises;
-			for (let k in _exercises) {
-				const _exercise = _exercises[k];
-				if (_exercise.isFree) {
-					exercises_list.push(_exercise);
-				} else {
-					for (let numSets in _exercise.sets) {
-						exercises_list.push(ExerciseVO.from({
-							..._exercise,
-							isReps: true,
-							id: _exercise.sets[numSets].id,
-							weightDefault: _exercise.sets[numSets].weight,
-							repsDefault: _exercise.sets[numSets].reps
-						}));
+			var sets = this.state.workout.sets[i];
+			for (let j in sets.exercises) {
+				var exercises = sets.exercises[j];
+				if (exercises.id == this.currentExercise.id) {
+					this.state.workout.sets[i].exercises[j].weightDefault = this.currentExercise.weightDefault;
+					this.state.workout.sets[i].exercises[j].repsDefault = this.currentExercise.repsDefault;
+					//					return;
+				}
+
+				for (let k in exercises.sets) {
+					if (exercises.sets[k].id == this.currentExercise.id) {
+						this.state.workout.sets[i].exercises[j].sets[k].success = this.success;
+						this.state.workout.sets[i].exercises[j].sets[k].reps = this.currentExercise.repsDefault;
+						this.state.workout.sets[i].exercises[j].sets[k].weight = this.currentExercise.weightDefault;
+						//						return;
 					}
 				}
 			}
 		}
 
-		this.percentage = Math.min(100, Math.max(0, 100*stageNum/exercises_list.length)); 
+		console.log("This is the current stage stack: ", this.state.stages );
+
+		var newIndex = WorkoutStateStageInfo.from(this.currentStage);
+		newIndex.start = this.currentStage.time;
+		newIndex.time = this.currentStage.time;
+		newIndex.end = 0;
+
+		if (this.state.stages.length > 0) {
+			const currIndex = this.state.stages.length - 1;
+			this.state.stages[currIndex] = WorkoutStateStageInfo.from(this.currentStage);
+			this.state.stages[currIndex].end = this.currentStage.time;
+		}
+
+
+		this.state.stages.push(newIndex);
+
+
+		console.log("This after modification stack: ", this.state.stages );
+
+
+		if (!this.final)
+			this.router.navigate(['/executeWorkout', { state: JSON.stringify(this.state) }]);
+		else
+			this.router.navigate(['/successWorkout', { state: JSON.stringify(this.state) }]);
+		
+	}
+
+
+	processStage(stageNum: number) {
+
+		console.log("stageNum: ", stageNum);
+
+		var exercises_list: Array<ExerciseVO> = [];
+
+		for (let i in this.state.workout.sets) {
+			const _exercises = this.state.workout.sets[i].exercises;
+			for (let x = 0; x < this.state.workout.sets[i].repeats; x++)
+				for (let k in _exercises) {
+					const _exercise = _exercises[k];
+					if (_exercise.isFree) {
+						exercises_list.push(_exercise);
+					} else {
+						for (let numSets in _exercise.sets) {
+							exercises_list.push(ExerciseVO.from({
+								..._exercise,
+								isReps: true,
+								id: _exercise.sets[numSets].id,
+								weightDefault: _exercise.sets[numSets].weight,
+								repsDefault: _exercise.sets[numSets].reps
+							}));
+						}
+					}
+				}
+		}
+
+		this.percentage = Math.min(100, Math.max(0, 100 * stageNum / (exercises_list.length-1)));
 
 		console.log(exercises_list);
 		console.log(stageNum);
-		this.currentExercise = exercises_list[stageNum-1];
-		this.nextText = "Rest 120 (changethis)"
+		this.currentExercise = exercises_list[stageNum];
+
+		if (exercises_list.length-1 == stageNum){
+			this.nextText = "Final";
+			this.final = true;
+		} else {
+			this.final = false;
+			const next = exercises_list[stageNum+1];
+			this.nextText = (next.isDuration ? next.durationDefault + "s" : next.repsDefault + "x") +
+				" " + (next.isBodyweight ? "" : next.weightDefault + "kg ") + next.name;
+		}
 	}
 }

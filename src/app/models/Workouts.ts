@@ -13,11 +13,34 @@ export class SetVO {
 	){
 		this.name = makeid(20);
 	}
+
+	static from(o:any):SetVO{
+
+		var s = new SetVO();
+		for (let key in o){
+			Object(s)[key] = o[key];
+		}
+
+		if (o.exercises)
+			s.exercises = o.exercises.map((set:any) => ExerciseVO.from(set));
+
+		return s;
+	}
 }
 
 export class WorkoutVO {
 	name:String = "";
 	sets:Array<SetVO> = [];
+
+
+	static from(o:any):WorkoutVO{
+		var s = new WorkoutVO();
+		s.name = o.name;
+		
+		if (o.sets)
+			s.sets = o.sets.map((set:any) => SetVO.from(set));
+		return s;
+	}
 }
 
 
@@ -29,16 +52,13 @@ export class WorkoutModel implements OnInit{
 	constructor(
 		private exerciseModel:ExerciseModel
 	){
-	this.workouts = [
-			{name: "Kettlebell HIIT", sets:[
-				{name: "randomSetName-1", repeats: 2, exercises:[
-					this.exerciseModel.getExerciseByName("Cossack Squat").clone(),
-					this.exerciseModel.getExerciseByName("Barbell Curl").clone()]},
-				{name: "randomSetName-2", repeats: 2, exercises:[
-					this.exerciseModel.getExerciseByName("Cossack Squat").clone()
-				]}
-			]},
-		]
+		var workouts = window.localStorage.getItem("workouts");
+		if (workouts && JSON.parse(workouts).length > 0){
+			this.workouts = [];
+			JSON.parse(workouts).forEach((e: any) => {
+				this.workouts.push(WorkoutVO.from(e));
+			});
+		}
 	}
 	
 	ngOnInit(): void {
@@ -50,12 +70,12 @@ export class WorkoutModel implements OnInit{
 				for (let k in this.workouts[i].sets[j].exercises){
 					if (this.workouts[i].sets[j].exercises[k].id === id){
 						this.workouts[i].sets[j].exercises[k] = e;
+						window.localStorage.setItem("workouts", JSON.stringify(this.workouts));
 						return;
 					}
 				}
 			}
 		}
-
 	}
 	
 	getExerciseInstance(id:String):ExerciseVO{
@@ -75,12 +95,14 @@ export class WorkoutModel implements OnInit{
 		for (var index in this.workouts){
 			if (this.workouts[index].name === workoutName){
 				this.workouts[index] = workout;
+				window.localStorage.setItem("workouts", JSON.stringify(this.workouts));
 				return;
 			}
 		}
 		this.workoutsChanged.next(true);
+
 	}
-	
+
 	getWorkoutByName(name:String): WorkoutVO {
 		var list = this.workouts.filter(workout => workout.name === name);
 		if (list.length > 0)
@@ -92,6 +114,7 @@ export class WorkoutModel implements OnInit{
 		var workout = new WorkoutVO();
 		workout.name = "Workout-" + this.workouts.length;
 		this.workouts.push(workout);
+		window.localStorage.setItem("workouts", JSON.stringify(this.workouts));
 		return workout;
 	}
 
@@ -104,6 +127,7 @@ export class WorkoutModel implements OnInit{
 
 	deleteWorkout(name: any) {
 		this.workouts = this.workouts.filter(workout => workout.name !== name);
+		window.localStorage.setItem("workouts", JSON.stringify(this.workouts));
 		this.workoutsChanged.next(true);
 	}
 }

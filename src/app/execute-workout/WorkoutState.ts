@@ -25,6 +25,9 @@ export class WorkoutState {
 			Object(o)[key] = s[key];
 		}
 
+		if (s.workout)
+			o.workout = WorkoutVO.from(s.workout);
+			
 		if (s.stages)
 			o.stages = s.stages.map((stage: any) => WorkoutStateStageInfo.from(stage));
 

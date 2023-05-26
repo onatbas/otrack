@@ -28,6 +28,6 @@ export class MenuComponent implements OnInit {
   }
 
   execute():void{
-	this.router.navigate(['/executeWorkout']);
+	this.router.navigate(['/executeWorkout',]);
   }
 }

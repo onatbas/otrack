@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SetVO, WorkoutModel, WorkoutVO } from 'src/app/models/Workouts';
 import {Location} from '@angular/common';
 
@@ -13,6 +13,7 @@ export class EditWorkoutComponent implements OnInit {
   constructor(
 	private location:Location,
 	private route:ActivatedRoute,
+	private router:Router,
 	private workoutModel:WorkoutModel
   ) { }
 
@@ -54,7 +55,7 @@ export class EditWorkoutComponent implements OnInit {
   }
 
   start(){
-	
+	this.router.navigate(['executeWorkout', {state: JSON.stringify({workout: this.workout})}]);
   }
 }
 
