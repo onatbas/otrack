@@ -27,4 +27,11 @@ export class MenuComponent implements OnInit {
 	this.router.navigate(['/workouts']);
   }
 
+  export():void{
+	this.router.navigate(['/export']);
+  }
+
+  import():void{
+	this.router.navigate(['/import']);
+  }
 }

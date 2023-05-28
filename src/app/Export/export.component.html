@@ -1,0 +1,26 @@
+<mat-toolbar>
+	<button (click)="home()" mat-icon-button>
+		<mat-icon>home</mat-icon>
+	</button>
+	<span>Export</span>
+</mat-toolbar>
+
+<button mat-stroked-button class="content_copy" (click)="copy()"><mat-icon>content_copy</mat-icon> Copy to Clipboard</button>
+
+
+<div>
+	<button *ngIf="includeExercises" (click)="toggleIncludeExercises()" mat-icon-button><mat-icon
+			class="check">check_box</mat-icon> Exercises included</button>
+	<button *ngIf="!includeExercises" (click)="toggleIncludeExercises()" mat-icon-button><mat-icon
+			class="check">check_box_outline_blank</mat-icon> Exercises excluded</button>
+</div>
+
+
+<div>
+	<button *ngIf="includeWorkouts" (click)="toggleIncludeWorkouts()" mat-icon-button><mat-icon
+			class="check">check_box</mat-icon> Workouts included</button>
+	<button *ngIf="!includeWorkouts" (click)="toggleIncludeWorkouts()" mat-icon-button><mat-icon
+			class="check">check_box_outline_blank</mat-icon> Workouts excluded</button>
+</div>
+
+<p>{{content}}</p>

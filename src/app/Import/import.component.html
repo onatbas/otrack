@@ -1,0 +1,36 @@
+<mat-toolbar>
+	<button (click)="home()" mat-icon-button>
+		<mat-icon>home</mat-icon>
+	</button>
+	<span>Import</span>
+</mat-toolbar>
+
+<div>
+	<button *ngIf="includeExercises" (click)="toggleIncludeExercises()" mat-icon-button><mat-icon
+			class="check">check_box</mat-icon> Exercises included</button>
+	<button *ngIf="!includeExercises" (click)="toggleIncludeExercises()" mat-icon-button><mat-icon
+			class="check">check_box_outline_blank</mat-icon> Exercises excluded</button>
+</div>
+
+
+<div>
+	<button *ngIf="includeWorkouts" (click)="toggleIncludeWorkouts()" mat-icon-button><mat-icon
+			class="check">check_box</mat-icon> Workouts included</button>
+	<button *ngIf="!includeWorkouts" (click)="toggleIncludeWorkouts()" mat-icon-button><mat-icon
+			class="check">check_box_outline_blank</mat-icon> Workouts excluded</button>
+</div>
+
+<textarea [(ngModel)]="content"></textarea>
+
+<button mat-stroked-button class="content_paste" (click)="paste()"><mat-icon>content_paste</mat-icon> Parse</button>
+<button mat-stroked-button class="content_paste" (click)="submit()"><mat-icon>save</mat-icon> Save</button>
+
+<ul *ngIf="workoutList.length > 0">
+	Workouts<br/>
+	<li *ngFor="let workout of workoutList">{{workout.name}}</li>
+</ul>
+
+<ul *ngIf="exerciseList.length > 0">
+	Exercises<br/>
+	<li *ngFor="let exercise of exerciseList">{{exercise.name}}</li>
+</ul>

@@ -7,6 +7,8 @@ import { WorkoutsComponent } from './workouts/workouts.component';
 import { EditWorkoutComponent } from './workouts/edit-workout/edit-workout.component';
 import { ExecuteWorkoutComponent } from './execute-workout/execute-workout.component';
 import { SuccessWorkoutComponent } from './success-workout/success-workout.component';
+import { ImportComponent } from './Import/import.component';
+import { ExportComponent } from './Export/export.component';
 
 const routes: Routes = [
 	{ path: '',  component: MenuComponent },
@@ -16,7 +18,9 @@ const routes: Routes = [
 	{ path: 'editExercise', component: EditExerciseComponent},
 	{ path: 'editWorkout', component: EditWorkoutComponent},
 	{ path: 'executeWorkout', component: ExecuteWorkoutComponent},
-	{ path: 'successWorkout', component: SuccessWorkoutComponent}
+	{ path: 'successWorkout', component: SuccessWorkoutComponent},
+	{ path: 'import', component: ImportComponent},
+	{ path: 'export', component: ExportComponent},
   ];
     
 @NgModule({

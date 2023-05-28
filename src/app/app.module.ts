@@ -68,6 +68,8 @@ import { WorkoutSetComponent } from './workouts/edit-workout/workout-set/workout
 import { WorkoutSetExerciseItemComponent } from './workouts/edit-workout/workout-set/workout-set-exercise-item/workout-set-exercise-item.component';
 import { ExecuteWorkoutComponent } from './execute-workout/execute-workout.component';
 import { SuccessWorkoutComponent } from './success-workout/success-workout.component';
+import { ImportComponent } from './Import/import.component';
+import { ExportComponent } from './Export/export.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +84,9 @@ import { SuccessWorkoutComponent } from './success-workout/success-workout.compo
     WorkoutSetComponent,
     WorkoutSetExerciseItemComponent,
     ExecuteWorkoutComponent,
-    SuccessWorkoutComponent
+    SuccessWorkoutComponent,
+    ImportComponent,
+    ExportComponent
   ],
   imports: [
 	FormsModule,
