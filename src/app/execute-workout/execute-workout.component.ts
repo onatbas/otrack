@@ -127,7 +127,7 @@ export class ExecuteWorkoutComponent implements OnInit {
 
 		var path =  window.location.origin + '/assets/pop.mp3';
 		if (window.location.origin.includes("github"))
-			path = window.location.origin + 'otrack/assets/pop.mp3';
+			path = window.location.origin + '/otrack/assets/pop.mp3';
 
 		var context = this.audioContext;
 		var request = new XMLHttpRequest();
