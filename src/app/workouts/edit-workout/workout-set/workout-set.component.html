@@ -1,45 +1,44 @@
-
 <mat-card class="set">
 	<mat-card-content>Set
-	<button *ngIf="editMode" (click)="deleteSelf()" mat-icon-button>
-		<mat-icon>delete</mat-icon>
-	</button>
-</mat-card-content>
-	
-<div>
-	<div class="reps">
-		<div class="reps-counter">
-			<button  *ngIf="editMode" (click)="adjustReps(-1)"mat-icon-button><mat-icon>remove</mat-icon></button>
-			<div class="repeats">
-				<input matInput [(ngModel)]="set.repeats">
-				<span>x</span>
+		<button *ngIf="editMode" (click)="deleteSelf()" mat-icon-button>
+			<mat-icon>delete</mat-icon>
+		</button>
+	</mat-card-content>
+
+	<div>
+		<div class="reps">
+			<div class="reps-counter">
+				<button *ngIf="editMode" (click)="adjustReps(-1)" mat-icon-button><mat-icon>remove</mat-icon></button>
+				<div class="repeats">
+					<input matInput [(ngModel)]="set.repeats">
+					<span>x</span>
+				</div>
+				<button *ngIf="editMode" (click)="adjustReps(+1)" mat-icon-button><mat-icon>add</mat-icon></button>
 			</div>
-			<button  *ngIf="editMode" (click)="adjustReps(+1)" mat-icon-button><mat-icon>add</mat-icon></button>
 		</div>
+
+
+		<mat-list>
+			<app-workout-set-exercise-item (deleteExercise)="deleteExerciseFromSet($event)"
+				(moveExercise)="moveExerciseInSet($event)" [editMode]="editMode" [setItem]="set.exercises[index]"
+				[index]="index" [total]="set.exercises.length" *ngFor="let index of set.exercises.keys()">
+			</app-workout-set-exercise-item>
+		</mat-list>
+
+
 	</div>
 
-	<mat-list>
-		<app-workout-set-exercise-item 
-		(deleteExercise)="deleteExerciseFromSet($event)" 
-		(moveExercise)="moveExerciseInSet($event)"
-		[editMode]="editMode" [setItem]="set.exercises[index]" [index]="index" [total]="set.exercises.length"
-		*ngFor="let index of set.exercises.keys()">
-	</app-workout-set-exercise-item>
-	  </mat-list>
-
-	</div>
 
 
+	<br *ngIf="editMode">
+	<mat-form-field *ngIf="editMode">
+		<mat-label>Add Exercise</mat-label>
+		<mat-select [(value)]="selectedExercise">
+			<mat-option value="Rest">Rest</mat-option>
+			<mat-option *ngFor="let name of exerciseNames" [value]="name">{{name}}</mat-option>
+		</mat-select>
+	</mat-form-field>
+	<button *ngIf="editMode" mat-icon-button (click)="addExercise()"><mat-icon>add</mat-icon></button>
 
-	  <br *ngIf="editMode">
-<mat-form-field *ngIf="editMode">
-	<mat-label>Add Exercise</mat-label>
-	<mat-select [(value)]="selectedExercise">
-		<mat-option value="Rest">Rest</mat-option>
-		<mat-option *ngFor="let name of exerciseNames" [value]="name" >{{name}}</mat-option>
-	</mat-select>
-</mat-form-field>
-<button *ngIf="editMode" mat-icon-button (click)="addExercise()"><mat-icon>add</mat-icon></button>
 
-
-	</mat-card>
+</mat-card>

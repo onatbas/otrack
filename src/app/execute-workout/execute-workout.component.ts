@@ -12,26 +12,33 @@ import { Location } from '@angular/common';
 })
 export class ExecuteWorkoutComponent implements OnInit {
 
+
+	audioContext: AudioContext;
+	buffer: AudioBuffer;
+	source: AudioBufferSourceNode;
+
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
 		private location: Location
 	) {
-		this.audio.src = "assets/pop.mp3";
-		this.audio.load();
+		this.audioContext = new window.AudioContext();
+		this.buffer = this.audioContext.createBuffer(1, 1, 22050);
+		this.source = this.audioContext.createBufferSource();
 	}
 
-	audio = new Audio();
+	audioEnabled:boolean = false;
+	message:String = "";
 
 	percentage: number = 0;
 	nextText: String = "";
 	success: boolean = true;
-	final:boolean = false;
+	final: boolean = false;
 
-	successes:{ [key: string]: any[] } = {}; // Define successes as an object with string keys and array values
+	successes: { [key: string]: any[] } = {}; // Define successes as an object with string keys and array values
 
 	//map. id to success array.
-	
+
 	state: WorkoutState = WorkoutState.from({
 		workout: {
 			name: "Dummy Workout",
@@ -79,20 +86,20 @@ export class ExecuteWorkoutComponent implements OnInit {
 	timer: any = null;
 
 	ngOnDestroy() {
-		  clearInterval(this.timer);
+		clearInterval(this.timer);
 	}
 
 	ngOnInit(): void {
 		this.route.params.subscribe(params => {
 			console.log(params['state']);
-			if (! params['state']){
+			if (!params['state']) {
 				this.location.back();
-			}else{
+			} else {
 				this.state = WorkoutState.from(JSON.parse(params['state']));
 			}
 
-			if (this.state.stages.length>0)
-				this.currentStage = this.state.stages[this.state.stages.length-1];
+			if (this.state.stages.length > 0)
+				this.currentStage = this.state.stages[this.state.stages.length - 1];
 			else
 				this.state.stages.push(this.currentStage);
 			this.processStage(this.state.stages.length - 1);
@@ -108,10 +115,31 @@ export class ExecuteWorkoutComponent implements OnInit {
 	}
 
 	checktime() {
-			const countdown = this.currentExercise.durationDefault + this.currentStage.start - this.currentStage.time ;
-			
-			if (countdown <= 5 && countdown >= 0)
-				this.audio.play();
+		const countdown = this.currentExercise.durationDefault + this.currentStage.start - this.currentStage.time;
+
+		if (this.currentExercise.isDuration && countdown < 5 && countdown >= 0)
+			this.playAudio();
+	}
+
+	playAudio() {
+		if (!this.audioEnabled || !this.currentExercise.isDuration)
+			return;
+
+		var path =  window.location.origin + '/assets/pop.mp3';
+		var context = this.audioContext;
+		var request = new XMLHttpRequest();
+		this.message = 'Playing ' + path;
+		request.open('GET', path, true);
+		request.responseType = 'arraybuffer';
+		request.addEventListener('load', function (e) {
+			context.decodeAudioData(this.response, function (buffer) {
+				var source = context.createBufferSource();
+				source.buffer = buffer;
+				source.connect(context.destination);
+				source.start(0);
+			});
+		}, false);
+		request.send();	
 	}
 
 	back() {
@@ -134,6 +162,17 @@ export class ExecuteWorkoutComponent implements OnInit {
 		this.currentExercise.repsDefault += num;
 	}
 
+	toggleAudio(){
+		this.audioEnabled = !this.audioEnabled;
+
+		if (this.audioEnabled){
+			this.source.buffer = this.buffer;
+			this.source.connect(this.audioContext.destination);
+			this.source.start(0);
+		}
+
+	}
+
 	proceed() {
 		this.successes[this.currentExercise.id.toString()].push(this.success);
 
@@ -151,7 +190,7 @@ export class ExecuteWorkoutComponent implements OnInit {
 			}
 		}
 
-		console.log("This is the current stage stack: ", this.state.stages );
+		console.log("This is the current stage stack: ", this.state.stages);
 
 		var newIndex = WorkoutStateStageInfo.from(this.currentStage);
 		newIndex.start = this.currentStage.time;
@@ -168,14 +207,14 @@ export class ExecuteWorkoutComponent implements OnInit {
 		this.state.stages.push(newIndex);
 
 
-		console.log("This after modification stack: ", this.state.stages );
+		console.log("This after modification stack: ", this.state.stages);
 
 
 		if (!this.final)
 			this.router.navigate(['/executeWorkout', { state: JSON.stringify(this.state) }]);
 		else
 			this.router.navigate(['/successWorkout', { state: JSON.stringify(this.state) }]);
-		
+
 	}
 
 
@@ -188,14 +227,14 @@ export class ExecuteWorkoutComponent implements OnInit {
 		for (let i in this.state.workout.sets) {
 			for (let x = 0; x < this.state.workout.sets[i].repeats; x++)
 				for (let k in this.state.workout.sets[i].exercises) {
-					if (stageNum == 0 )
-					this.state.workout.sets[i].exercises[k].successes = [];
+					if (stageNum == 0)
+						this.state.workout.sets[i].exercises[k].successes = [];
 					const _exercise = this.state.workout.sets[i].exercises[k];
-					this.successes[_exercise.id.toString()] =  _exercise.successes;
+					this.successes[_exercise.id.toString()] = _exercise.successes;
 					if (_exercise.isFree) {
 						exercises_list.push(_exercise);
 					} else {
-						for (let numSets=0; numSets< _exercise.sets; numSets++) {
+						for (let numSets = 0; numSets < _exercise.sets; numSets++) {
 							exercises_list.push(ExerciseVO.from({
 								..._exercise,
 							}));
@@ -204,18 +243,18 @@ export class ExecuteWorkoutComponent implements OnInit {
 				}
 		}
 
-		this.percentage = Math.min(100, Math.max(0, 100 * stageNum / (exercises_list.length-1)));
+		this.percentage = Math.min(100, Math.max(0, 100 * stageNum / (exercises_list.length - 1)));
 
 		console.log(exercises_list);
 		console.log(stageNum);
 		this.currentExercise = exercises_list[stageNum];
 
-		if (exercises_list.length-1 == stageNum){
+		if (exercises_list.length - 1 == stageNum) {
 			this.nextText = "Final";
 			this.final = true;
 		} else {
 			this.final = false;
-			const next = exercises_list[stageNum+1];
+			const next = exercises_list[stageNum + 1];
 			this.nextText = (next.isDuration ? next.durationDefault + "s" : next.repsDefault + "x") +
 				" " + (next.isBodyweight ? "" : next.weightDefault + "kg ") + next.name;
 		}

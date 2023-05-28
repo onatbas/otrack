@@ -10,32 +10,29 @@
 
 
 <div id="content">
-<mat-card class="set statistics">
-	<h1>{{workoutState.workout.name}}</h1>
-	
-	<span>Time:<span class="time">{{ lastStage.time * 1000 | date:'mm:ss' }}</span></span>
+	<mat-card class="set statistics">
+		<h1>{{workoutState.workout.name}}</h1>
 
-</mat-card>
+		<span>Time:<span class="time">{{ lastStage.time * 1000 | date:'mm:ss' }}</span></span>
 
-<mat-card class="set" *ngFor="let set of workoutState.workout.sets">
-	<mat-card-content>
+	</mat-card>
+
+	<mat-card class="set" *ngFor="let set of workoutState.workout.sets">
+		<mat-card-content>
 			<div class="exercise" *ngFor="let exercise of set.exercises">
 				<p class="exerciseName">{{exercise.name}}</p>
-				<mat-list-item><div  [class]="success ? 'success' : 'fail'"  *ngFor="let success of exercise.successes">
-					<span *ngIf="exercise.isDuration">{{exercise.durationDefault}}s </span>
-					<span *ngIf="exercise.isReps">{{exercise.repsDefault}}x </span>
-					<span *ngIf="!exercise.isBodyweight">{{exercise.weightDefault}}kg </span>
-				</div>
-				<div *ngIf="!exercise.isFree">
-					<p class="subset" [class]="success ? 'success' : 'fail'" *ngFor="let success of exercise.successes">
-						<span *ngIf="exercise.isDuration">{{exercise.durationDefault}}s </span>
-						<span *ngIf="exercise.isReps">{{exercise.repsDefault}}x </span>
-						<span *ngIf="!exercise.isBodyweight">{{exercise.weightDefault}}kg </span>
-					</p>
-				</div>
-			</mat-list-item>
-			<hr>
+				<mat-list-item>
+					<div>
+						<p [class]="success ? 'success' : 'fail'"
+							*ngFor="let success of exercise.successes">
+							<span *ngIf="exercise.isDuration">{{exercise.durationDefault}}s </span>
+							<span *ngIf="exercise.isReps">{{exercise.repsDefault}}x </span>
+							<span *ngIf="!exercise.isBodyweight">{{exercise.weightDefault}}kg </span>
+						</p>
+					</div>
+				</mat-list-item>
+				<hr>
 			</div>
-	</mat-card-content>
-</mat-card>
+		</mat-card-content>
+	</mat-card>
 </div>

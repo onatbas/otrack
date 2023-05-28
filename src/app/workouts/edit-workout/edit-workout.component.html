@@ -15,10 +15,9 @@
 <div id="content">
 
 	<br>
+	
 	<app-workout-set *ngFor="let set of workout.sets" [set]="set" (deleteSet)="deleteSet($event)"
 		[editMode]="editMode"></app-workout-set>
-
-
 	<br>
 
 	<div class="add" *ngIf="editMode" (click)="addSet()">
