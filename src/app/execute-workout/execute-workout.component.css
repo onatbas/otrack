@@ -8,10 +8,10 @@
 }
 
 .art{
-	width: 50%;
+	width: 60%;
 	position: absolute;
-	top: 25%;
-	right: 25%;
+	top: 23%;
+	right: 20%;
 	border-radius: 10px;
 	-webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
 	filter: grayscale(100%);
@@ -27,16 +27,13 @@
 	text-align: center;
 }
 
-.menu_left, .menu_right{
-	padding-top: 20px;
+.doubleSize{
+	margin-top: 20px;
 }
 
-.menu_left mat-icon, .menu_right mat-icon{
-	transform: scale(2);
-	vertical-align: middle;
-	margin-bottom: 70px;
+.doubleSize mat-icon{
+	transform: scale(2.5);
 }
-
 .timer{
 	text-align: center;
 	font-size: 52px;

@@ -4,18 +4,20 @@
 </div>
 
 <div class="menu_left">
-	<button (click)="back()" mat-icon-button><mat-icon class="arrow_left">arrow_left</mat-icon></button>
+	<button (click)="back()" class="doubleSize" mat-icon-button>
+		<mat-icon class="arrow_left">arrow_left</mat-icon>
+	</button>
 </div>
 <div class="menu_right">
 	<!--<button (click)="cancel()" mat-icon-button><mat-icon class="cancel">cancel</mat-icon></button>
 	<br>-->
-	<button *ngIf="success" (click)="toggleSuccess()" mat-icon-button><mat-icon
+	<button  class="doubleSize" *ngIf="success" (click)="toggleSuccess()" mat-icon-button><mat-icon
 			class="check">check_box</mat-icon></button>
-	<button *ngIf="!success" (click)="toggleSuccess()" mat-icon-button><mat-icon
+	<button  class="doubleSize" *ngIf="!success" (click)="toggleSuccess()" mat-icon-button><mat-icon
 			class="check">check_box_outline_blank</mat-icon></button>
 
-			<button *ngIf="audioEnabled" mat-icon-button (click)="toggleAudio()"><mat-icon>volume_up</mat-icon></button>
-			<button *ngIf="!audioEnabled" mat-icon-button (click)="toggleAudio()"><mat-icon>volume_off</mat-icon></button>
+			<button  class="doubleSize" *ngIf="audioEnabled" mat-icon-button (click)="toggleAudio()"><mat-icon>volume_up</mat-icon></button>
+			<button  class="doubleSize" *ngIf="!audioEnabled" mat-icon-button (click)="toggleAudio()"><mat-icon>volume_off</mat-icon></button>
 </div>
 
 <img class="art" (click)="proceed()" src="assets/dumbell.jpg" />
