@@ -16,7 +16,12 @@ export class ExecuteWorkoutComponent implements OnInit {
 		private route: ActivatedRoute,
 		private router: Router,
 		private location: Location
-	) { }
+	) {
+		this.audio.src = "../assets/pop.mp3";
+		this.audio.load();
+	}
+
+	audio = new Audio();
 
 	percentage: number = 0;
 	nextText: String = "";
@@ -73,6 +78,10 @@ export class ExecuteWorkoutComponent implements OnInit {
 
 	timer: any = null;
 
+	ngOnDestroy() {
+		  clearInterval(this.timer);
+	}
+
 	ngOnInit(): void {
 		this.route.params.subscribe(params => {
 			console.log(params['state']);
@@ -99,7 +108,10 @@ export class ExecuteWorkoutComponent implements OnInit {
 	}
 
 	checktime() {
-
+			const countdown = this.currentExercise.durationDefault + this.currentStage.start - this.currentStage.time ;
+			
+			if (countdown <= 5 && countdown >= 0)
+				this.audio.play();
 	}
 
 	back() {

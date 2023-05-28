@@ -19,7 +19,12 @@
 	</div>
 
 	<mat-list>
-		<app-workout-set-exercise-item (deleteExercise)="deleteExerciseFromSet($event)" [editMode]="editMode" [setItem]="setItem" *ngFor="let setItem of set.exercises"></app-workout-set-exercise-item>
+		<app-workout-set-exercise-item 
+		(deleteExercise)="deleteExerciseFromSet($event)" 
+		(moveExercise)="moveExerciseInSet($event)"
+		[editMode]="editMode" [setItem]="set.exercises[index]" [index]="index" [total]="set.exercises.length"
+		*ngFor="let index of set.exercises.keys()">
+	</app-workout-set-exercise-item>
 	  </mat-list>
 
 	</div>

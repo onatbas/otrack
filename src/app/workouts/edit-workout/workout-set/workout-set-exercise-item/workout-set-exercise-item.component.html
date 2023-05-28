@@ -13,8 +13,8 @@
 	<span class="icons" *ngIf="editMode">
 		<button (click)="delete()" mat-icon-button><mat-icon>delete</mat-icon></button>
 		<button (click)="edit()" mat-icon-button><mat-icon>edit</mat-icon></button>
-		<button mat-icon-button><mat-icon>arrow_upward</mat-icon></button>
-		<button mat-icon-button><mat-icon>arrow_downward</mat-icon></button>
+		<button [class]="index == 0 ? 'hidden' : 'visible'" mat-icon-button (click)="move(-1)"><mat-icon>arrow_upward</mat-icon></button>
+		<button [class]="index+1 >= total ? 'hidden' : 'visible'" mat-icon-button (click)="move(+1)"><mat-icon>arrow_downward</mat-icon></button>
 	</span>
 
 

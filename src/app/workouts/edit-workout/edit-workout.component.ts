@@ -48,6 +48,7 @@ export class EditWorkoutComponent implements OnInit {
 
   deleteSet(name:String){
 	this.workout.sets = this.workout.sets.filter(set=>set.name !== name);
+	this.save();
   }
 
   addSet(){
