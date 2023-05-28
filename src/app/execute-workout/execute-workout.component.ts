@@ -17,7 +17,7 @@ export class ExecuteWorkoutComponent implements OnInit {
 		private router: Router,
 		private location: Location
 	) {
-		this.audio.src = "../assets/pop.mp3";
+		this.audio.src = "assets/pop.mp3";
 		this.audio.load();
 	}
 
