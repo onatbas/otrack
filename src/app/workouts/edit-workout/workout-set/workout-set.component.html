@@ -14,7 +14,7 @@
 						<mat-icon>delete</mat-icon>
 					</button>
 				</td>
-				<td>
+				<td *ngIf="editMode">
 					<span class="isBorrowable">
 						<button mat-stroked-button (click)="toggleIsBorrowable()" *ngIf="!set.isBorrowable">
 							<mat-icon>check_box_outline_blank</mat-icon><span class="strikethrough"> Borrowable</span>
@@ -25,6 +25,7 @@
 						</button>
 					</span>
 				</td>
+				<td *ngIf="!editMode && set.isBorrowable"><span class="isBorrowable italic">Borrowable</span></td>
 			</tr>
 		</table>
 	</mat-card-content>

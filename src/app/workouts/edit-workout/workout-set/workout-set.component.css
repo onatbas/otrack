@@ -59,3 +59,7 @@ td{
 	text-align: center;
 	padding: auto;
 }
+
+.italic{
+	font-style: italic;
+}
