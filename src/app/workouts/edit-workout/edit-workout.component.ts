@@ -49,7 +49,8 @@ export class EditWorkoutComponent implements OnInit {
 			var borrowedSet = SetVO.from({
 				...borrowables.filter(borrowable => borrowable.name === set.name)[0],
 				isBorrowed: true,
-				isBorrowable: false
+				isBorrowable: false,
+				userAssignedName: set.userAssignedName
 			})
 			return borrowedSet;
 		}
@@ -98,7 +99,7 @@ export class EditWorkoutComponent implements OnInit {
 			for (let sIndex = 0; sIndex < workout.sets.length; sIndex++) {
 				const set = workout.sets[sIndex];
 				
-				if(set.isBorrowable && set.userAssignedName.includes(this.setSearchText)){
+				if(set.isBorrowable && set.userAssignedName.toLowerCase().includes(this.setSearchText.toLowerCase())){
 					var searchResult = new SetSearchVO();
 					searchResult.id = set.name;
 					searchResult.workout = workout.name;
