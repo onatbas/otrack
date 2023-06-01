@@ -17,7 +17,7 @@ export class EditWorkoutComponent implements OnInit {
 	private workoutModel:WorkoutModel
   ) { }
 
-  editMode:boolean = false;
+  editMode:boolean = true;
 
   ngOnInit(): void {
 	this.route.params.subscribe(params => {

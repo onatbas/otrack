@@ -41,17 +41,12 @@ export class ExerciseVO{
 	 static from(o:any):ExerciseVO{
 		var s = new ExerciseVO();
 
-		s.id = o.id;
-		s.name = o.name;
-		s.isReps = o.isReps;
-		s.isDuration = o.isDuration;
-		s.repsDefault = o.repsDefault;
-		s.durationDefault = o.durationDefault;
-		s.isBodyweight = o.isBodyweight;
-		s.weightDefault = o.weightDefault;
-		s.isFree = o.isFree;
-		s.sets = o.sets;
-		s.successes = o.successes;
+		for (const key in o) {
+			if (o.hasOwnProperty(key) && typeof o[key] !== 'undefined') {
+			  Object(s)[key] = o[key];
+			}
+		  }
+		  
 		return s;
 	  }
 }

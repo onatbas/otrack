@@ -24,10 +24,7 @@
 				[index]="index" [total]="set.exercises.length" *ngFor="let index of set.exercises.keys()">
 			</app-workout-set-exercise-item>
 		</mat-list>
-
-
 	</div>
-
 
 
 	<br *ngIf="editMode">
@@ -38,7 +35,12 @@
 			<mat-option *ngFor="let name of exerciseNames" [value]="name">{{name}}</mat-option>
 		</mat-select>
 	</mat-form-field>
-	<button *ngIf="editMode" mat-icon-button (click)="addExercise()"><mat-icon>add</mat-icon></button>
-
-
+	<button *ngIf="editMode" mat-stroked-button (click)="addExercise()"><mat-icon>add</mat-icon>Add Selected</button>
+	<br/>
+	<mat-form-field *ngIf="editMode">
+		<input (keyup)="onSearchChange($event)" matInput [(ngModel)]="searchText">
+		<button *ngFor="let candidate of candidates" (click)="chooseBySearch(candidate)" class="candidate" mat-stroked-button>{{candidate}}</button>
+		<button *ngIf="candidates.length < 1 && searchText.length > 2" (click)="addNewExercise()" mat-stroked-button color="primary"><mat-icon>add</mat-icon>Add New</button>
+	</mat-form-field>
+	
 </mat-card>

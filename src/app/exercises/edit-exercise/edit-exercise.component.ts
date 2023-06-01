@@ -23,6 +23,8 @@ export class EditExerciseComponent implements OnInit {
 	exerciseName: String = "";
 	exercise: ExerciseVO = new ExerciseVO();
 	instanced:boolean = false;
+	saveExerciseGlobal:boolean = false;
+	goBackOnSave:boolean = false;
 
 	ngOnInit(): void {
 		this.route.params.subscribe(params => {
@@ -34,6 +36,9 @@ export class EditExerciseComponent implements OnInit {
 				this.exercise = this.exerciseModel.getExerciseByName(params['name']);
 
 			this.exerciseName = this.exercise.name;
+
+			this.saveExerciseGlobal = params["saveExerciseGlobal"];
+			this.goBackOnSave = params["goBackOnSave"];
 		});
 	}
 
@@ -42,10 +47,18 @@ export class EditExerciseComponent implements OnInit {
 	}
 
 	save() {
-		if (this.instanced)
+		if (this.instanced){
 			this.workoutModel.setExerciseInstance(this.exercise.id, this.exercise);
-		else
+
+			if (this.saveExerciseGlobal){
+
+				this.exerciseModel.updateExercise(this.exerciseModel.createBlankExercise().name, this.exercise);
+			}
+		}else
 			this.exerciseModel.updateExercise(this.exercise.name, this.exercise);
+
+			if (this.goBackOnSave)
+			this.back();
 	}
 
 	delete() {

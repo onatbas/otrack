@@ -19,7 +19,7 @@
 	<app-workout-set *ngFor="let set of workout.sets" [set]="set" (deleteSet)="deleteSet($event)"
 		[editMode]="editMode"></app-workout-set>
 	<br>
-
+	
 	<div class="add" *ngIf="editMode" (click)="addSet()">
 		<button mat-stroked-button>Add <mat-icon>add</mat-icon></button>
 	</div>
@@ -29,7 +29,6 @@
 	<button (click)="save()" class="save" mat-stroked-button>Save</button>
 	<button (click)="delete()" class="exit" mat-stroked-button>Delete</button>
 </mat-toolbar>
-
 
 <mat-toolbar id="lower-menu" *ngIf="!editMode">
 	<button (click)="start()" class="save" mat-stroked-button>Start</button>
