@@ -10,6 +10,10 @@ export class SetVO {
 	repeats:number = 1;
 	exercises:Array<ExerciseVO> = [];
 
+	userAssignedName:String = "";
+	isBorrowable:boolean = false;
+	isBorrowed:boolean = false;
+
 	constructor(
 	){
 		this.name = makeid(20);
@@ -106,6 +110,14 @@ export class WorkoutModel implements OnInit{
 	}
 
 	updateWorkout(workoutName: String, workout: WorkoutVO) {
+
+		for (let sIndex = 0; sIndex < workout.sets.length; sIndex++) {
+			const set = workout.sets[sIndex];
+			if (set.isBorrowed && set.exercises.length > 0){
+				this.updateBorrowedSet(set);
+			}
+		}
+
 		for (var index in this.workouts){
 			if (this.workouts[index].name === workoutName){
 				this.workouts[index] = workout;
@@ -113,8 +125,22 @@ export class WorkoutModel implements OnInit{
 				return;
 			}
 		}
+
 		this.workoutsChanged.next(true);
 
+	}
+
+	updateBorrowedSet(borrowedSet:SetVO){
+		for (let wIndex = 0; wIndex < this.workouts.length; wIndex++) {
+			const workout = this.workouts[wIndex];
+			
+			for (let sIndex = 0; sIndex < workout.sets.length; sIndex++) {
+				const set = workout.sets[sIndex];
+				
+				if (set.name === borrowedSet.name)
+				this.workouts[wIndex].sets[sIndex].exercises = borrowedSet.exercises;
+			}
+		}
 	}
 
 	getWorkoutByName(name:String): WorkoutVO {
@@ -144,5 +170,20 @@ export class WorkoutModel implements OnInit{
 		this.workouts = this.workouts.filter(workout => workout.name !== name);
 		window.localStorage.setItem("workouts", JSON.stringify(this.workouts));
 		this.workoutsChanged.next(true);
+	}
+
+	getBorrowableSets():Array<SetVO>{
+		var result: Array<SetVO> = [];
+		for (let wIndex = 0; wIndex < this.workouts.length; wIndex++) {
+			const workout = this.workouts[wIndex];
+			
+			for (let sIndex = 0; sIndex < workout.sets.length; sIndex++) {
+				const set = workout.sets[sIndex];
+				
+				if (set.isBorrowable)
+					result.push(set);
+			}
+		}
+		return result;
 	}
 }

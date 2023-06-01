@@ -153,7 +153,6 @@ export class ExecuteWorkoutComponent implements OnInit {
 				if (exercises.id == this.currentExercise.id) {
 					this.state.workout.sets[i].exercises[j].weightDefault = this.currentExercise.weightDefault;
 					this.state.workout.sets[i].exercises[j].repsDefault = this.currentExercise.repsDefault;
-					//					return;
 					this.state.workout.sets[i].exercises[j].successes = this.successes[this.currentExercise.id.toString()];
 				}
 

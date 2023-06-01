@@ -35,3 +35,27 @@
 	text-align: center;
 	display: block;
 }
+
+.isBorrowable{
+	text-align: right;
+	width: 100%;
+	display: block;
+	padding-right: 10px
+}
+
+td{
+	width: 50vw;
+}
+
+
+.strikethrough{
+	text-decoration: line-through;
+}
+
+.borrowedSetName{
+	position: relative;
+	top:8px;
+	margin-right: 20px;
+	text-align: center;
+	padding: auto;
+}

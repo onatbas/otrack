@@ -30,3 +30,7 @@
 #content::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
 }
+
+.highlight{
+	color: orange;
+}

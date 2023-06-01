@@ -85,4 +85,8 @@ export class WorkoutSetComponent implements OnInit {
 
 	this.router.navigate(["/editExercise", {instanced: true, id: id, saveExerciseGlobal: true, goBackOnSave: true}]);
   }
+
+  toggleIsBorrowable(){
+	this.set.isBorrowable = !this.set.isBorrowable;
+  }
 }

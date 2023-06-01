@@ -13,15 +13,26 @@
 </mat-toolbar>
 
 <div id="content">
-
 	<br>
-	
+
 	<app-workout-set *ngFor="let set of workout.sets" [set]="set" (deleteSet)="deleteSet($event)"
 		[editMode]="editMode"></app-workout-set>
 	<br>
-	
+
 	<div class="add" *ngIf="editMode" (click)="addSet()">
 		<button mat-stroked-button>Add <mat-icon>add</mat-icon></button>
+	</div>
+
+	<div class="add" *ngIf="editMode">
+		<button *ngFor="let candidate of candidates" (click)="chooseBySearch(candidate.id)" class="candidate"
+		mat-stroked-button>
+		<span class="highlight">{{candidate.name}}</span> from <span
+			class="highlight">{{candidate.workout}}</span></button>
+			<br />
+		<mat-form-field>
+			<input (keyup)="onSearchChange($event)" matInput [(ngModel)]="setSearchText">
+		</mat-form-field>
+
 	</div>
 </div>
 
