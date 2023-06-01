@@ -53,6 +53,16 @@ export class WorkoutVO {
 })
 export class WorkoutModel implements OnInit{
 
+	private editMode:boolean = false;
+	getEditMode(): boolean {
+		return this.editMode;
+	}
+
+	toggleEditMode(): boolean{
+		this.editMode = !this.editMode;
+		return this.getEditMode();
+	}
+
 	constructor(
 		private exerciseModel:ExerciseModel
 	){

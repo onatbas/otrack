@@ -12,3 +12,15 @@
 	font-size: 24px;
 	
 }
+
+
+#content{
+	height: 78%;
+	overflow: scroll;
+	-ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+
+#content::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}

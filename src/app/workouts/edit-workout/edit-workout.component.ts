@@ -17,7 +17,7 @@ export class EditWorkoutComponent implements OnInit {
 	private workoutModel:WorkoutModel
   ) { }
 
-  editMode:boolean = true;
+  editMode:boolean = this.workoutModel.getEditMode();
 
   ngOnInit(): void {
 	this.route.params.subscribe(params => {
@@ -43,7 +43,7 @@ export class EditWorkoutComponent implements OnInit {
   }
 
   edit(){
-	this.editMode = !this.editMode;
+	this.editMode = this.workoutModel.toggleEditMode();
   }
 
   deleteSet(name:String){

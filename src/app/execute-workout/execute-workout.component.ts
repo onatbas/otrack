@@ -229,4 +229,8 @@ export class ExecuteWorkoutComponent implements OnInit {
 				" " + (next.isBodyweight ? "" : next.weightDefault + "kg ") + next.name;
 		}
 	}
+
+	hour(){
+		return this.currentStage.time < 3600 ? "" : Math.floor(this.currentStage.time/3600);
+	}
 }

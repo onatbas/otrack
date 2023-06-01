@@ -1,5 +1,5 @@
 <div class="timer">
-	<span class="master">{{ currentStage.time * 1000 | date:'mm:ss' }}</span><br>
+	<span class="master"><span *ngIf="hour() > 0">{{ hour() }}:</span>{{currentStage.time * 1000 | date: 'mm:ss' }}</span><br>
 	<span class="diff">{{ (currentStage.time - currentStage.start ) * 1000 | date:'mm:ss' }}</span><br>
 </div>
 
@@ -20,12 +20,10 @@
 			<button  class="doubleSize" *ngIf="!audioEnabled" mat-icon-button (click)="toggleAudio()"><mat-icon>volume_off</mat-icon></button>
 </div>
 
-<img class="art" (click)="proceed()" src="assets/dumbell.jpg" />
-
-
-<!--
-	<p>{{message}}</p>
--->
+<button class="art" [color]="success ? '' : 'warn'" mat-raised-button [class]="success ? 'logSuccess green' : 'logFail'" (click)="proceed()">
+	<mat-icon fontSet="material-icons-outlined"  *ngIf="success">sentiment_very_satisfied_outline</mat-icon>
+	<mat-icon fontSet="material-icons-outlined" *ngIf="!success">sentiment_very_dissatisfied_outline</mat-icon>
+</button>
 
 <div class="lower_menu">
 	<div>
