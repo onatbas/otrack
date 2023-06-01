@@ -9,18 +9,20 @@
 
 
 <div>
-	<button *ngIf="includeExercises" (click)="toggleIncludeExercises()" mat-icon-button><mat-icon
+	<button *ngIf="includeExercises" (click)="toggleIncludeExercises()" mat-stroked-button><mat-icon
 			class="check">check_box</mat-icon> Exercises included</button>
-	<button *ngIf="!includeExercises" (click)="toggleIncludeExercises()" mat-icon-button><mat-icon
+	<button *ngIf="!includeExercises" (click)="toggleIncludeExercises()" mat-stroked-button><mat-icon
 			class="check">check_box_outline_blank</mat-icon> Exercises excluded</button>
 </div>
 
+<br />
 
 <div>
-	<button *ngIf="includeWorkouts" (click)="toggleIncludeWorkouts()" mat-icon-button><mat-icon
+	<button *ngIf="includeWorkouts" (click)="toggleIncludeWorkouts()" mat-stroked-button><mat-icon
 			class="check">check_box</mat-icon> Workouts included</button>
-	<button *ngIf="!includeWorkouts" (click)="toggleIncludeWorkouts()" mat-icon-button><mat-icon
+	<button *ngIf="!includeWorkouts" (click)="toggleIncludeWorkouts()" mat-stroked-button><mat-icon
 			class="check">check_box_outline_blank</mat-icon> Workouts excluded</button>
 </div>
 
+<br/>
 <p>{{content}}</p>

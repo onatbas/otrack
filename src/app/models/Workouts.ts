@@ -108,6 +108,7 @@ export class WorkoutModel implements OnInit{
 	}
 
 	getWorkoutByName(name:String): WorkoutVO {
+		console.log("getWorkoutByName..");
 		var list = this.workouts.filter(workout => workout.name === name);
 		if (list.length > 0)
 			return JSON.parse(JSON.stringify(list[0]));

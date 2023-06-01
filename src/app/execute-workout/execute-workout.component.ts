@@ -42,40 +42,7 @@ export class ExecuteWorkoutComponent implements OnInit {
 	state: WorkoutState = WorkoutState.from({
 		workout: {
 			name: "Dummy Workout",
-			sets: [
-				{
-					name: "Set1",
-					repeats: 2,
-					exercises: [
-						ExerciseVO.from({
-							name: "Bench Press",
-							isFree: false,
-							sets: [{
-								weight: 20,
-								reps: 10,
-								id: "tankthebill1"
-							}, {
-								weight: 30,
-								reps: 15,
-								id: "tankthebill2"
-							}]
-						})
-					]
-				}, {
-					name: "set2",
-					repeats: 1,
-					exercises: [
-						ExerciseVO.from({
-							name: "Cossack Squat",
-							isFree: true,
-							isReps: false,
-							isDuration: true,
-							durationDefault: 45,
-							isBodyweight: true
-						})
-					]
-				}
-			]
+			sets: []
 		},
 		stages: []
 	});

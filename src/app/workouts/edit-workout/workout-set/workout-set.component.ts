@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ExerciseModel, ExerciseVO } from 'src/app/models/Exercise';
 import { SetVO } from 'src/app/models/Workouts';
 import { MoveExerciseData } from './workout-set-exercise-item/workout-set-exercise-item.component';
+import { makeid } from 'src/app/models/randomid';
 
 @Component({
   selector: 'app-workout-set',
@@ -33,7 +34,10 @@ export class WorkoutSetComponent implements OnInit {
 
 
   addExercise(){
-	this.set.exercises.push(this.exerciseModel.getExerciseByName(this.selectedExercise).clone());
+	this.set.exercises.push(ExerciseVO.from({
+		...this.exerciseModel.getExerciseByName(this.selectedExercise),
+		id: makeid(22)
+	}));
 	this.deleteSet.emit(undefined);
 
 }

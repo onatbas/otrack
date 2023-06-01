@@ -56,6 +56,7 @@ export class EditWorkoutComponent implements OnInit {
   }
 
   start(){
+	console.log("starting workout..");
 	this.router.navigate(['executeWorkout', {state: JSON.stringify({workout: this.workout})}]);
   }
 }

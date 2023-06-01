@@ -54,6 +54,7 @@ export class EditExerciseComponent implements OnInit {
 	}
 
 	repsChanged(event: MatTabChangeEvent) {
+		console.log("Reps: ", this.exercise.isReps);
 		this.exercise.isReps = event.index === 0;
 		this.exercise.isDuration = !this.exercise.isReps;
 	}
