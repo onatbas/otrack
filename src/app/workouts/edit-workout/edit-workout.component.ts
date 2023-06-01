@@ -98,7 +98,7 @@ export class EditWorkoutComponent implements OnInit {
 			for (let sIndex = 0; sIndex < workout.sets.length; sIndex++) {
 				const set = workout.sets[sIndex];
 				
-				if(set.isBorrowable){
+				if(set.isBorrowable && set.userAssignedName.includes(this.setSearchText)){
 					var searchResult = new SetSearchVO();
 					searchResult.id = set.name;
 					searchResult.workout = workout.name;
