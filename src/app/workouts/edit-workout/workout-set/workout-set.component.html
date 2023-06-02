@@ -38,8 +38,14 @@
 				<div class="repeats">
 					<input matInput [(ngModel)]="set.repeats">
 					<span>x</span>
+					
 				</div>
 				<button *ngIf="editMode" (click)="adjustReps(+1)" mat-icon-button><mat-icon>add</mat-icon></button>
+
+				<br/>
+				<button *ngIf="editMode" [class]="index == 0 ? 'hidden' : 'visible'" mat-icon-button (click)="move(-1)"><mat-icon>arrow_upward</mat-icon></button>
+				<button *ngIf="editMode" [class]="index+1 >= total ? 'hidden' : 'visible'" mat-icon-button (click)="move(1)"><mat-icon>arrow_downward</mat-icon></button>
+		
 			</div>
 		</div>
 
@@ -88,6 +94,11 @@
 			<div class="reps-counter">
 				<div class="repeats">
 					<span>{{set.repeats}} x</span>
+					
+					<br/>
+					<button *ngIf="editMode" [class]="index == 0 ? 'hidden' : 'visible'" mat-icon-button (click)="move(-1)"><mat-icon>arrow_upward</mat-icon></button>
+					<button *ngIf="editMode" [class]="index+1 >= total ? 'hidden' : 'visible'" mat-icon-button (click)="move(1)"><mat-icon>arrow_downward</mat-icon></button>
+				
 				</div>
 			</div>
 		</div>

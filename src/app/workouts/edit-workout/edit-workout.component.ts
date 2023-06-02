@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SetVO, WorkoutModel, WorkoutVO } from 'src/app/models/Workouts';
 import {Location} from '@angular/common';
+import { MoveSetData } from './workout-set/workout-set.component';
 
 class SetSearchVO{
 	id:String = "";
@@ -121,6 +122,13 @@ export class EditWorkoutComponent implements OnInit {
 	this.workout.sets.push(set);
 	this.setSearchText = "";
 	this.candidates = [];
+  }
+
+  moveSetInWorkout(e:MoveSetData){
+	const tmp = this.workout.sets[e.from];
+	this.workout.sets[e.from] = this.workout.sets[e.to];
+	this.workout.sets[e.to] = tmp;
+	this.save();
   }
 }
 

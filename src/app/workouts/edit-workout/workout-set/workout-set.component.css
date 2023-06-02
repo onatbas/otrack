@@ -63,3 +63,7 @@ td{
 .italic{
 	font-style: italic;
 }
+
+.hidden{
+	visibility: hidden;
+}

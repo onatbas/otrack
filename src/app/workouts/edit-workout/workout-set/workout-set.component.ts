@@ -5,6 +5,16 @@ import { MoveExerciseData } from './workout-set-exercise-item/workout-set-exerci
 import { makeid } from 'src/app/models/randomid';
 import { Router } from '@angular/router';
 
+export class MoveSetData{
+	public from:number;
+	public to:number;
+
+	constructor(_from:number, _to:number) {
+		this.from = _from;
+		this.to = _to;
+	}
+}
+
 @Component({
   selector: 'app-workout-set',
   templateUrl: './workout-set.component.html',
@@ -13,6 +23,7 @@ import { Router } from '@angular/router';
 export class WorkoutSetComponent implements OnInit {
 
   @Output() deleteSet = new EventEmitter<String>();
+  @Output() moveSet = new EventEmitter<MoveSetData>();
 
   deleteSelf(){
 	this.deleteSet.emit(this.set.name);
@@ -26,6 +37,10 @@ export class WorkoutSetComponent implements OnInit {
 
   @Input() set:SetVO = new SetVO();
   @Input() editMode:boolean = false;
+
+  @Input() index:number = 0;
+  @Input() total:number = 0;
+
   exerciseNames:Array<String> = [];
   searchText:String = "";
   candidates:Array<String> = [];
@@ -88,5 +103,9 @@ export class WorkoutSetComponent implements OnInit {
 
   toggleIsBorrowable(){
 	this.set.isBorrowable = !this.set.isBorrowable;
+  }
+
+  move(it:number){
+	this.moveSet.emit(new MoveSetData(this.index, this.index+it));
   }
 }
