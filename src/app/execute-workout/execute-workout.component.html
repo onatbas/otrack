@@ -18,7 +18,10 @@
 
 			<button  class="doubleSize" *ngIf="audioEnabled" mat-icon-button (click)="toggleAudio()"><mat-icon>volume_up</mat-icon></button>
 			<button  class="doubleSize" *ngIf="!audioEnabled" mat-icon-button (click)="toggleAudio()"><mat-icon>volume_off</mat-icon></button>
-</div>
+
+
+			<button  class="doubleSize" mat-icon-button (click)="toggleHelp()"><mat-icon>help</mat-icon></button>
+	</div>
 
 <button class="art" [color]="success ? '' : 'warn'" mat-raised-button [class]="success ? 'logSuccess green' : 'logFail'" (click)="proceed()">
 	<mat-icon fontSet="material-icons-outlined"  *ngIf="success">sentiment_very_satisfied_outline</mat-icon>
@@ -56,4 +59,11 @@
 		<div [style.width.%]="percentage" class="box_full box">
 		</div>
 	</div>
+</div>
+
+<div class="help" *ngIf="showHelp">
+	<iframe  [src]="safeSrc" frameborder="0"
+	style="height: 100%; width: 100%;"></iframe>
+
+
 </div>

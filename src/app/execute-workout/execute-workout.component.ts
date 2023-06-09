@@ -4,6 +4,7 @@ import { WorkoutState, WorkoutStateStageInfo } from './WorkoutState';
 import { WorkoutVO } from '../models/Workouts';
 import { ExerciseVO } from '../models/Exercise';
 import { Location } from '@angular/common';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
 	selector: 'app-execute-workout',
@@ -16,12 +17,15 @@ export class ExecuteWorkoutComponent implements OnInit {
 	audioContext: AudioContext;
 	buffer: AudioBuffer;
 	source: AudioBufferSourceNode;
+	safeSrc: SafeResourceUrl;
 
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
-		private location: Location
+		private location: Location,
+		private sanitizer: DomSanitizer
 	) {
+		this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl("bing.com");
 		this.audioContext = new window.AudioContext();
 		this.buffer = this.audioContext.createBuffer(1, 1, 22050);
 		this.source = this.audioContext.createBufferSource();
@@ -34,6 +38,7 @@ export class ExecuteWorkoutComponent implements OnInit {
 	nextText: String = "";
 	success: boolean = true;
 	final: boolean = false;
+	showHelp: boolean = false;
 
 	successes: { [key: string]: any[] } = {}; // Define successes as an object with string keys and array values
 
@@ -232,4 +237,16 @@ export class ExecuteWorkoutComponent implements OnInit {
 	hour(){
 		return this.currentStage.time < 3600 ? "" : Math.floor(this.currentStage.time/3600);
 	}
+
+
+	toggleHelp(){
+
+//		searchText:string = "https://www.bing.com/images/search?q=clean-and-jerk";
+
+
+		this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl("https://www.bing.com/images/search?q=" + this.currentExercise.name);
+	
+		this.showHelp = !this.showHelp;
+	}
+
 }

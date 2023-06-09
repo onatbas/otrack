@@ -133,3 +133,16 @@
 	border: 0px;
 	background-color: white;
 }
+
+.help{
+	position: absolute;
+	width: 70%;
+	margin: 10%;
+	height: 90%;
+	top: 0px;
+	left: 0px;
+}
+
+.suggestion-title{
+	visibility: hidden !important;
+}
