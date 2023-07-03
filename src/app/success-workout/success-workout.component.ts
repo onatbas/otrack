@@ -19,17 +19,20 @@ export class SuccessWorkoutComponent implements OnInit {
   }
 
   workoutState:WorkoutState = new WorkoutState;
+  save:boolean = false;
   lastStage:WorkoutStateStageInfo = new WorkoutStateStageInfo;
 
   ngOnInit(): void {
 	this.route.params.subscribe(params => {
 		console.log(params['state']);
 		this.workoutState = JSON.parse(params['state']);
+		this.save = JSON.parse(params['save']);
 
 		this.lastStage = this.workoutState.stages[this.workoutState.stages.length-1];
 		this.workoutState.workout.archive = this.workoutState.stages;
 
-		this.workoutModel.updateWorkout(this.workoutState.workout.name, this.workoutState.workout);
+		if (this.save)
+			this.workoutModel.updateWorkout(this.workoutState.workout.name, this.workoutState.workout);
 	});
   }
 

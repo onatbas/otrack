@@ -187,7 +187,7 @@ export class ExecuteWorkoutComponent implements OnInit {
 		if (!this.final)
 			this.router.navigate(['/executeWorkout', { state: JSON.stringify(this.state) }]);
 		else
-			this.router.navigate(['/successWorkout', { state: JSON.stringify(this.state) }]);
+			this.router.navigate(['/successWorkout', { state: JSON.stringify(this.state), save: true}]);
 
 	}
 

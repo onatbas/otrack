@@ -5,3 +5,11 @@ mat-list-item{
 	font-weight: bold;
 	font-style: italic;
 }
+
+
+.ver{
+	position: absolute;
+	right: 10px;
+	bottom: 10px;
+	font-style: italic;
+}
