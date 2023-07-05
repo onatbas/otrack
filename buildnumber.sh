@@ -1,9 +1,9 @@
 
+version=1.1
 number=$(git tr -1 | xargs -L2 | cut -d\  -f2)
 
 echo "
-
 export const GLOBALCONSTANTS = {
-	version: \"$number\"
+	version: \"$version.$number\"
 }
 " > globalconstants.ts
