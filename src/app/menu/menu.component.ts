@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-menu',
@@ -12,9 +13,13 @@ export class MenuComponent implements OnInit {
   constructor(
 	private route: ActivatedRoute,
 	private router: Router
-  ) {}
+  ) {
+  }
+
+  public version:String = '';
 
   ngOnInit(): void {
+	this.version = environment.version;
   }
 
 
