@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { WorkoutModel } from '../models/Workouts';
-import { ExerciseModel } from '../models/Exercise';
+import { WorkoutModel, WorkoutVO } from '../models/Workouts';
+import { ExerciseModel, ExerciseVO } from '../models/Exercise';
 import {Clipboard} from '@angular/cdk/clipboard';
 import { Location } from '@angular/common';
 
@@ -13,7 +13,7 @@ export class ExportComponent implements OnInit {
 
   constructor(
 	private workout:WorkoutModel,
-	private exercises:ExerciseModel,
+	private exercise:ExerciseModel,
 	private clipboard: Clipboard,
 	private location:Location
   ) { }
@@ -23,7 +23,16 @@ export class ExportComponent implements OnInit {
 
   content:String = "";
 
+  workoutChosen:Map<String, boolean> = new Map<String, boolean>();
+  workouts:Array<WorkoutVO> = [];
+  exercises:Array<ExerciseVO> = [];
+
   ngOnInit(): void {
+	this.workouts = this.workout.getWorkouts();
+	this.exercises = this.exercise.getExercises();
+
+	this.workouts.forEach(w =>
+		this.workoutChosen.set(w.name, true));
 	this.createContent();
   }
 
@@ -49,10 +58,28 @@ export class ExportComponent implements OnInit {
   createContent(){
 	var object:any = {};
 	if (this.includeWorkouts)
-	object.workouts = this.workout.getWorkouts();
+	object.workouts = this.workouts.filter(w=>this.workoutChosen.get(w.name) == true);
 	if (this.includeExercises)
-	object.exercises = this.exercises.getExercises();
+	object.exercises = this.exercises;
 
 	this.content = JSON.stringify(object);
   }
+
+  toggleChosen(name:String, refresh: boolean = true){
+	this.workoutChosen.set(
+		name,
+		!this.workoutChosen.get(name)
+	)
+		if (refresh)
+			this.createContent();
+
+};
+
+	toggleAll(){
+		this.workouts.forEach(w =>
+			this.toggleChosen(w.name, false));
+		
+		this.createContent();
+
+	}
 }

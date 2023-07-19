@@ -5,7 +5,8 @@
 	<span>Export</span>
 </mat-toolbar>
 
-<button mat-stroked-button class="content_copy" (click)="copy()"><mat-icon>content_copy</mat-icon> Copy to Clipboard</button>
+<button mat-stroked-button class="content_copy" (click)="copy()"><mat-icon>content_copy</mat-icon> Copy to
+	Clipboard</button>
 
 
 <div>
@@ -24,5 +25,20 @@
 			class="check">check_box_outline_blank</mat-icon> Workouts excluded</button>
 </div>
 
-<br/>
+<div id="content">
+
+<ul *ngIf="includeWorkouts">
+	<button (click)="toggleAll()" mat-stroked-button>Toggle All</button>
+
+	<li *ngFor="let workout of workouts">
+
+		<input type="checkbox" (click)="toggleChosen(workout.name, true)" [checked]="workoutChosen.get(workout.name)" />
+		{{workout.name}}
+	</li>
+</ul>
+
+<br>
 <p>{{content}}</p>
+
+
+</div>

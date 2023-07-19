@@ -3,3 +3,23 @@
 	width: 100%;
 	margin: 10px;
 }
+
+td{
+	max-width: 40%;
+}
+
+
+
+#content{
+	border: 1px solid gray;
+	border-radius: 5px;
+	margin: 10px;
+	height: 60%;
+	overflow: scroll;
+	-ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+
+#content::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
