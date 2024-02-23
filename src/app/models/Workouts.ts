@@ -45,6 +45,7 @@ export class WorkoutVO {
 	sets:Array<SetVO> = [];
 	archive: Array<WorkoutStateStageInfo> = [];
 	successState: SuccessStates = SuccessStates.NONE;
+	completionDate: string = "N/A";
 
 
 	static from(o:any):WorkoutVO{
@@ -57,6 +58,8 @@ export class WorkoutVO {
 			s.archive = o.archive.map((archived:any) => WorkoutStateStageInfo.from(archived));
 		if (o.successState)
 			s.successState = o.successState;
+		if (o.completionDate)
+			s.completionDate = o.completionDate;
 		return s;
 	}
 }

@@ -24,7 +24,7 @@ export class SuccessWorkoutComponent implements OnInit {
 
   successState:SuccessStates = SuccessStates.SUCCESS;
   selectionOptions = Object.entries(SuccessStates).map(([key, value]) => ({ key, value }));
-
+  completionDate: string = "";
 
   ngOnInit(): void {
 	this.route.params.subscribe(params => {
@@ -33,13 +33,17 @@ export class SuccessWorkoutComponent implements OnInit {
 		this.save = params['save'];
 		
 		this.successState = this.workoutState.workout.successState;
+		this.completionDate = this.workoutState.workout.completionDate;
 
 		this.lastStage = this.workoutState.stages[this.workoutState.stages.length-1] || {time: 0};
 		console.log(this.lastStage);
 		this.workoutState.workout.archive = this.workoutState.stages;
 
 		if (this.save){
-			this.workoutState.workout.successState = SuccessStates.SUCCESS;
+			this.completionDate = new Date().toDateString();
+			this.workoutState.workout.completionDate = this.completionDate;
+			this.successState = SuccessStates.SUCCESS;
+			this.workoutState.workout.successState = this.successState;
 			this.workoutModel.updateWorkout(this.workoutState.workout.name, this.workoutState.workout);
 		}
 	});
