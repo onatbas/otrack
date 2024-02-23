@@ -138,7 +138,8 @@ import { ExportComponent } from './Export/export.component';
     OverlayModule,
     PortalModule,
     ScrollingModule,
-	ReactiveFormsModule
+	ReactiveFormsModule,
+	MatFormFieldModule
 
   ],
   providers: [
