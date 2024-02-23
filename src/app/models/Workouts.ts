@@ -33,10 +33,18 @@ export class SetVO {
 	}
 }
 
+
+export enum SuccessStates {
+	SUCCESS = "success",
+	NONE = "none",
+	FAIL = "fail"
+}
+
 export class WorkoutVO {
 	name:String = "";
 	sets:Array<SetVO> = [];
 	archive: Array<WorkoutStateStageInfo> = [];
+	successState: SuccessStates = SuccessStates.NONE;
 
 
 	static from(o:any):WorkoutVO{
@@ -47,6 +55,8 @@ export class WorkoutVO {
 			s.sets = o.sets.map((set:any) => SetVO.from(set));
 		if (o.archive)
 			s.archive = o.archive.map((archived:any) => WorkoutStateStageInfo.from(archived));
+		if (o.successState)
+			s.successState = o.successState;
 		return s;
 	}
 }

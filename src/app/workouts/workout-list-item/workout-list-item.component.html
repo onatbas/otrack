@@ -1,4 +1,4 @@
-<mat-list-item>
+<mat-list-item [class]="workout.successState">
 	<button *ngIf="edit" (click)="delete()" mat-icon-button class="info-icon"><mat-icon>delete</mat-icon></button>
 	<div (click)="editItem()" class="name-box">{{workout.name}}</div>
 	<button *ngIf="!edit" (click)="info()" mat-icon-button class="info-icon"><mat-icon>info</mat-icon></button>

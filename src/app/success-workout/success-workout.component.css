@@ -46,3 +46,24 @@
 #content::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
 }
+
+
+.bigboi{
+	width: 90%;
+	margin: 10px;
+}
+
+
+.bigboi *{
+	width: 100%;
+}
+
+.SUCCESS{
+	font-weight: bold;
+	color: greenyellow;
+}
+
+.FAIL{
+	font-weight: bold;
+	color: red;
+}

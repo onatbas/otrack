@@ -15,7 +15,15 @@
 
 		<span>Time:<span class="time">{{ lastStage.time * 1000 | date:'mm:ss' }}</span></span>
 
+
+
+<mat-button-toggle-group class="bigboi" [(ngModel)]="successState" (change)="onSuccessChange()">
+	<mat-button-toggle *ngFor="let option of selectionOptions" [value]="option.value" [class]="option.key">
+		{{ option.value.charAt(0).toUpperCase() + option.value.slice(1)}}
+	  </mat-button-toggle>
+</mat-button-toggle-group>
 	</mat-card>
+	
 
 	<mat-card class="set" *ngFor="let set of workoutState.workout.sets">
 		<mat-card-content>
