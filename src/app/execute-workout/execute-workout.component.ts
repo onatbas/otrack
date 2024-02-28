@@ -13,10 +13,10 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 })
 export class ExecuteWorkoutComponent implements OnInit {
 
-
-	audioContext: AudioContext;
-	buffer: AudioBuffer;
-	source: AudioBufferSourceNode;
+	audioPath: string;
+	audioContext!: AudioContext;
+	buffer!: AudioBuffer;
+	source!: AudioBufferSourceNode;
 	safeSrc: SafeResourceUrl;
 
 	constructor(
@@ -25,11 +25,37 @@ export class ExecuteWorkoutComponent implements OnInit {
 		private location: Location,
 		private sanitizer: DomSanitizer
 	) {
-		this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl("bing.com");
+
+		this.audioPath = window.location.origin + '/assets/pop.mp3';
+		if (window.location.origin.includes("github")) {
+			this.audioPath = window.location.origin + '/otrack/assets/pop.mp3';
+		}
+		this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioPath);		
+		this.initAudio();
+		document.addEventListener('visibilitychange', this.handleVisibilityChange.bind(this));
+
+	}
+
+
+	handleVisibilityChange() {
+		if (!document.hidden) {
+		  if (this.audioContext.state === 'suspended') {
+			this.audioContext.resume().then(() => {
+			  console.log('Audio context resumed successfully.');
+			});
+		  } else if (this.audioContext.state === 'closed') {
+			this.initAudio();
+			console.log('Audio context recreated successfully.');
+		  }
+		}
+	  }
+
+	initAudio(){
 		this.audioContext = new window.AudioContext();
 		this.buffer = this.audioContext.createBuffer(1, 1, 22050);
 		this.source = this.audioContext.createBufferSource();
 	}
+
 
 	audioEnabled:boolean = false;
 	message:String = "";
@@ -115,6 +141,7 @@ export class ExecuteWorkoutComponent implements OnInit {
 			});
 		}, false);
 		request.send();	
+		this.checkAndLoadAudio();
 	}
 
 	back() {
@@ -137,15 +164,17 @@ export class ExecuteWorkoutComponent implements OnInit {
 		this.currentExercise.repsDefault += num;
 	}
 
-	toggleAudio(){
-		this.audioEnabled = !this.audioEnabled;
-
+	checkAndLoadAudio(){
 		if (this.audioEnabled){
 			this.source.buffer = this.buffer;
 			this.source.connect(this.audioContext.destination);
 			this.source.start(0);
 		}
+	}
 
+	toggleAudio(){
+		this.audioEnabled = !this.audioEnabled;
+		this.checkAndLoadAudio();
 	}
 
 	proceed() {
