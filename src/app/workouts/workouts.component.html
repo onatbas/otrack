@@ -1,5 +1,6 @@
 
-	<mat-toolbar>
+<div class="main-container">
+<mat-toolbar>
 	<button (click)="back()" mat-icon-button>
 		<mat-icon>keyboard_backspace</mat-icon>
 	</button>
@@ -7,14 +8,16 @@
 </mat-toolbar>
 
 <div id="content">
-	
-  <mat-list>
-	<app-workout-list-item *ngFor="let workout of workouts" [workout]="workout" [edit]="editMode">
-	</app-workout-list-item>
-  </mat-list>
+
+	<mat-list>
+		<app-workout-list-item *ngFor="let workout of workouts" [workout]="workout" [edit]="editMode">
+		</app-workout-list-item>
+	</mat-list>
 
 </div>
-  <mat-toolbar id="lower-menu">
+<mat-toolbar id="lower-menu">
 	<button (click)="edit()" class="edit" mat-stroked-button>Edit</button>
 	<button (click)="new()" class="new" mat-stroked-button>New</button>
 </mat-toolbar>
+
+</div>

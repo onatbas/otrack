@@ -36,17 +36,28 @@
 	font-style: italic;
 }
 
-#content{
-	height: 90%;
-	overflow: scroll;
-	-ms-overflow-style: none;  /* Internet Explorer 10+ */
-    scrollbar-width: none;  /* Firefox */
-}
-
-#content::-webkit-scrollbar { 
-    display: none;  /* Safari and Chrome */
-}
-
+html, body {
+	height: 100%;
+	margin: 0;
+  }
+  
+  .main-container {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+  }
+  
+  #content {
+	flex-grow: 1;
+	overflow: auto;
+	-ms-overflow-style: none; /* Internet Explorer 10+ */
+	scrollbar-width: none; /* Firefox */
+  }
+  
+  #content::-webkit-scrollbar { 
+	display: none; /* Safari and Chrome */
+  }
+    
 
 .bigboi{
 	width: 90%;
