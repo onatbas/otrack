@@ -37,7 +37,8 @@ export class SetVO {
 export enum SuccessStates {
 	SUCCESS = "success",
 	NONE = "none",
-	FAIL = "fail"
+	FAIL = "fail",
+	NEXT = "next"
 }
 
 export class WorkoutVO {

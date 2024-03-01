@@ -9,6 +9,11 @@
 	color: red;
 }
 
+.next{
+	font-weight: bold;
+	color: aqua;
+}
+
 .completion{
 	text-align: right;
 	font-style: italic;

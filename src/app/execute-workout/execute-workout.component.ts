@@ -30,7 +30,7 @@ export class ExecuteWorkoutComponent implements OnInit {
 		if (window.location.origin.includes("github")) {
 			this.audioPath = window.location.origin + '/otrack/assets/pop.mp3';
 		}
-		this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioPath);		
+		this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioPath);
 		this.initAudio();
 		document.addEventListener('visibilitychange', this.handleVisibilityChange.bind(this));
 
@@ -39,26 +39,26 @@ export class ExecuteWorkoutComponent implements OnInit {
 
 	handleVisibilityChange() {
 		if (!document.hidden) {
-		  if (this.audioContext.state === 'suspended') {
-			this.audioContext.resume().then(() => {
-			  console.log('Audio context resumed successfully.');
-			});
-		  } else if (this.audioContext.state === 'closed') {
-			this.initAudio();
-			console.log('Audio context recreated successfully.');
-		  }
+			if (this.audioContext.state === 'suspended') {
+				this.audioContext.resume().then(() => {
+					console.log('Audio context resumed successfully.');
+				});
+			} else if (this.audioContext.state === 'closed') {
+				this.initAudio();
+				console.log('Audio context recreated successfully.');
+			}
 		}
-	  }
+	}
 
-	initAudio(){
+	initAudio() {
 		this.audioContext = new window.AudioContext();
 		this.buffer = this.audioContext.createBuffer(1, 1, 22050);
 		this.source = this.audioContext.createBufferSource();
 	}
 
 
-	audioEnabled:boolean = false;
-	message:String = "";
+	audioEnabled: boolean = false;
+	message: String = "";
 
 	percentage: number = 0;
 	nextText: String = "";
@@ -81,10 +81,14 @@ export class ExecuteWorkoutComponent implements OnInit {
 	currentStage: WorkoutStateStageInfo = new WorkoutStateStageInfo;
 	currentExercise: ExerciseVO = new ExerciseVO;
 
+	startTimestamp: number = 0;
 	timer: any = null;
 
 	ngOnDestroy() {
-		clearInterval(this.timer);
+		if (this.timer) {
+			clearInterval(this.timer);
+			this.timer = null;
+		}
 	}
 
 	ngOnInit(): void {
@@ -103,13 +107,26 @@ export class ExecuteWorkoutComponent implements OnInit {
 			this.processStage(this.state.stages.length - 1);
 
 			console.log(this.currentStage);
+			if (this.startTimestamp == 0)
+				this.startTimestamp = Date.now();
 
 			if (this.timer == null)
 				this.timer = setInterval(() => {
-					this.currentStage.time++;
-					this.checktime();
+					this.updateTime();
 				}, 1000);
 		});
+	}
+
+	diff:number = 0;
+	updateTime() {
+		this.currentStage.time++;
+		const now = Date.now();
+		const elapsed = Math.floor((now - this.startTimestamp) / 1000);
+
+		this.diff = elapsed;
+
+		this.currentStage.time = elapsed;
+		this.checktime();
 	}
 
 	checktime() {
@@ -123,7 +140,7 @@ export class ExecuteWorkoutComponent implements OnInit {
 		if (!this.audioEnabled || !this.currentExercise.isDuration)
 			return;
 
-		var path =  window.location.origin + '/assets/pop.mp3';
+		var path = window.location.origin + '/assets/pop.mp3';
 		if (window.location.origin.includes("github"))
 			path = window.location.origin + '/otrack/assets/pop.mp3';
 
@@ -140,7 +157,7 @@ export class ExecuteWorkoutComponent implements OnInit {
 				source.start(0);
 			});
 		}, false);
-		request.send();	
+		request.send();
 		this.checkAndLoadAudio();
 	}
 
@@ -164,15 +181,15 @@ export class ExecuteWorkoutComponent implements OnInit {
 		this.currentExercise.repsDefault += num;
 	}
 
-	checkAndLoadAudio(){
-		if (this.audioEnabled){
+	checkAndLoadAudio() {
+		if (this.audioEnabled) {
 			this.source.buffer = this.buffer;
 			this.source.connect(this.audioContext.destination);
 			this.source.start(0);
 		}
 	}
 
-	toggleAudio(){
+	toggleAudio() {
 		this.audioEnabled = !this.audioEnabled;
 		this.checkAndLoadAudio();
 	}
@@ -216,7 +233,7 @@ export class ExecuteWorkoutComponent implements OnInit {
 		if (!this.final)
 			this.router.navigate(['/executeWorkout', { state: JSON.stringify(this.state) }]);
 		else
-			this.router.navigate(['/successWorkout', { state: JSON.stringify(this.state), save: true}]);
+			this.router.navigate(['/successWorkout', { state: JSON.stringify(this.state), save: true }]);
 
 	}
 
@@ -263,18 +280,18 @@ export class ExecuteWorkoutComponent implements OnInit {
 		}
 	}
 
-	hour(){
-		return this.currentStage.time < 3600 ? "" : Math.floor(this.currentStage.time/3600);
+	hour() {
+		return this.currentStage.time < 3600 ? "" : Math.floor(this.currentStage.time / 3600);
 	}
 
 
-	toggleHelp(){
+	toggleHelp() {
 
-//		searchText:string = "https://www.bing.com/images/search?q=clean-and-jerk";
+		//		searchText:string = "https://www.bing.com/images/search?q=clean-and-jerk";
 
 
-		this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl("https://www.bing.com/images/search?q=" + this.currentExercise.name);
-	
+		this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl("https://www.bing.com/images/search?q=" + this.currentExercise.name);
+
 		this.showHelp = !this.showHelp;
 	}
 
