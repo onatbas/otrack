@@ -53,6 +53,19 @@ export class SuccessWorkoutComponent implements OnInit {
 	});
   }
 
+  reset(){
+	this.workoutState.workout.archive = [];
+	this.workoutState.workout.sets.forEach(set => {
+		set.exercises.forEach(exercise =>{
+				exercise.successes = [];
+		});
+	});
+	this.workoutState.workout.successState = this.successState = SuccessStates.NONE;
+	this.workoutState.workout.completionDate =  "N/A";
+	this.completionDate = new Date();
+	this.workoutModel.updateWorkout(this.workoutState.workout.name, this.workoutState.workout);
+  }
+
 
   onSuccessChange(){
 	var copyWorkout = this.workoutModel.getWorkoutByName(this.workoutState.workout.name);
