@@ -146,3 +146,15 @@
 .suggestion-title{
 	visibility: hidden !important;
 }
+
+#showDebug{
+	border: 1px solid red;
+	display: table-cell;
+	width: 80%;
+	height: 50%;
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	background-color: rgba(0, 0, 0, 0.5);
+
+}

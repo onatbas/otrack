@@ -21,7 +21,9 @@
 
 
 			<button  class="doubleSize" mat-icon-button (click)="toggleHelp()"><mat-icon>help</mat-icon></button>
-	</div>
+
+			<button  class="doubleSize" mat-icon-button (click)="toggleDebug()"><mat-icon>bug_report</mat-icon></button>
+		</div>
 
 <button class="art" [color]="success ? '' : 'warn'" mat-raised-button [class]="success ? 'logSuccess green' : 'logFail'" (click)="proceed()">
 	<mat-icon fontSet="material-icons-outlined"  *ngIf="success">sentiment_very_satisfied_outline</mat-icon>
@@ -66,5 +68,10 @@
 	<iframe  [src]="safeSrc" frameborder="0"
 	style="height: 100%; width: 100%;"></iframe>
 
+
+</div>
+
+<div id="showDebug" *ngIf="showDebug">
+	<div *ngFor="let msg of debugLogs">{{msg}}</div>
 
 </div>

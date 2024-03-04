@@ -18,6 +18,7 @@ export class ExecuteWorkoutComponent implements OnInit {
 	buffer!: AudioBuffer;
 	source!: AudioBufferSourceNode;
 	safeSrc: SafeResourceUrl;
+	debugLogs:Array<string> = [];
 
 	constructor(
 		private route: ActivatedRoute,
@@ -36,6 +37,10 @@ export class ExecuteWorkoutComponent implements OnInit {
 
 	}
 
+	logDebug(msg:string){
+		this.debugLogs.unshift(msg);
+		
+	}
 
 	handleVisibilityChange() {
 		if (!document.hidden) {
@@ -51,6 +56,7 @@ export class ExecuteWorkoutComponent implements OnInit {
 	}
 
 	initAudio() {
+		this.logDebug("init audio");
 		this.audioContext = new window.AudioContext();
 		this.buffer = this.audioContext.createBuffer(1, 1, 22050);
 		this.source = this.audioContext.createBufferSource();
@@ -119,9 +125,11 @@ export class ExecuteWorkoutComponent implements OnInit {
 
 	diff:number = 0;
 	updateTime() {
-		this.currentStage.time++;
+		this.logDebug("Update time..");
 		const now = Date.now();
 		const elapsed = Math.floor((now - this.startTimestamp) / 1000);
+		this.logDebug("currentStage.time: " + this.currentStage.time +
+			"\n now: " + now + ", elapsed: " + elapsed);
 
 		this.diff = elapsed;
 
@@ -131,14 +139,22 @@ export class ExecuteWorkoutComponent implements OnInit {
 
 	checktime() {
 		const countdown = this.currentExercise.durationDefault + this.currentStage.start - this.currentStage.time;
-
-		if (this.currentExercise.isDuration && countdown < 5 && countdown >= 0)
+		this.logDebug("checktime" + ":dur: " + this.currentExercise.durationDefault + ", +start: "  + this.currentStage.start + ",  -time: " +  this.currentStage.time);
+		if (this.currentExercise.isDuration && countdown < 5 && countdown >= 0){
+			this.logDebug("playaudio");
 			this.playAudio();
+		}
+	}
+
+	showDebug: boolean = true;
+	toggleDebug(){
+		this.showDebug = !this.showDebug;
 	}
 
 	playAudio() {
 		if (!this.audioEnabled || !this.currentExercise.isDuration)
 			return;
+			this.logDebug("playaudio inside.");
 
 		var path = window.location.origin + '/assets/pop.mp3';
 		if (window.location.origin.includes("github"))
@@ -182,7 +198,9 @@ export class ExecuteWorkoutComponent implements OnInit {
 	}
 
 	checkAndLoadAudio() {
+		this.logDebug("checkAndLoadAudio");
 		if (this.audioEnabled) {
+			this.logDebug("checkAndLoadAudio inside");
 			this.source.buffer = this.buffer;
 			this.source.connect(this.audioContext.destination);
 			this.source.start(0);
