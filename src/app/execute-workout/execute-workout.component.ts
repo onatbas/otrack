@@ -5,6 +5,7 @@ import { WorkoutVO } from '../models/Workouts';
 import { ExerciseVO } from '../models/Exercise';
 import { Location } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { EquipmentModel, EquipmentVO } from '../models/Equipment';
 
 @Component({
 	selector: 'app-execute-workout',
@@ -19,12 +20,16 @@ export class ExecuteWorkoutComponent implements OnInit {
 	source!: AudioBufferSourceNode;
 	safeSrc: SafeResourceUrl;
 	debugLogs:Array<string> = [];
+	equipment: EquipmentVO = EquipmentVO.from({
+		unit: "kg"
+	});
 
 	constructor(
 		private route: ActivatedRoute,
 		private router: Router,
 		private location: Location,
-		private sanitizer: DomSanitizer
+		private sanitizer: DomSanitizer,
+		private equipmentModel: EquipmentModel
 	) {
 
 		this.audioPath = window.location.origin + '/assets/pop.mp3';
@@ -34,12 +39,10 @@ export class ExecuteWorkoutComponent implements OnInit {
 		this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(this.audioPath);
 		this.initAudio();
 		document.addEventListener('visibilitychange', this.handleVisibilityChange.bind(this));
-
 	}
 
 	logDebug(msg:string){
 		this.debugLogs.unshift(msg);
-		
 	}
 
 	handleVisibilityChange() {
@@ -62,7 +65,6 @@ export class ExecuteWorkoutComponent implements OnInit {
 		this.source = this.audioContext.createBufferSource();
 	}
 
-
 	audioEnabled: boolean = false;
 	message: String = "";
 
@@ -71,6 +73,7 @@ export class ExecuteWorkoutComponent implements OnInit {
 	success: boolean = true;
 	final: boolean = false;
 	showHelp: boolean = false;
+	stack:string="";
 
 	successes: { [key: string]: any[] } = {}; // Define successes as an object with string keys and array values
 
@@ -120,6 +123,13 @@ export class ExecuteWorkoutComponent implements OnInit {
 				this.timer = setInterval(() => {
 					this.updateTime();
 				}, 1000);
+
+			this.equipment = this.equipmentModel.getEquipmentByName(this.currentExercise.equipment);
+			let plates = this.equipment.findPlatesForWeight(this.currentExercise.weightDefault);
+			if (plates && !this.currentExercise.isBodyweight && plates.length > 0 )
+				this.stack = "(" + this.equipment.name + ": " + this.equipment.numberArrayToString(plates) + ")";
+			else
+				this.stack = "";
 		});
 	}
 
@@ -146,7 +156,7 @@ export class ExecuteWorkoutComponent implements OnInit {
 		}
 	}
 
-	showDebug: boolean = true;
+	showDebug: boolean = false;
 	toggleDebug(){
 		this.showDebug = !this.showDebug;
 	}

@@ -21,25 +21,14 @@
 
 .tab-content>*{
 	display: inline;
-	width: 70px;
 	vertical-align:middle;
 	font-size: 32px;
 }
 
+.narrow>*{
+	width: 100px;
+}
 
 .title{
 	width: 100%;
-}
-
-.narrow{
-	overflow-y: hidden;
-
-}
-
-.weighted{
-	height: 100px;
-}
-
-.red{
-	color:red;
 }

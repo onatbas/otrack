@@ -62,6 +62,8 @@ import {OverlayModule} from '@angular/cdk/overlay';
 import { FormsModule } from '@angular/forms';
 import { WorkoutsComponent } from './workouts/workouts.component';
 import { WorkoutListItemComponent } from './workouts/workout-list-item/workout-list-item.component';
+import { EquipmentListItemComponent } from './equipment/equipment-list-item/equipment-list-item.component';
+
 import { WorkoutModel } from './models/Workouts';
 import { EditWorkoutComponent } from './workouts/edit-workout/edit-workout.component';
 import { WorkoutSetComponent } from './workouts/edit-workout/workout-set/workout-set.component';
@@ -70,6 +72,8 @@ import { ExecuteWorkoutComponent } from './execute-workout/execute-workout.compo
 import { SuccessWorkoutComponent } from './success-workout/success-workout.component';
 import { ImportComponent } from './Import/import.component';
 import { ExportComponent } from './Export/export.component';
+import { EquipmentComponent } from './equipment/equipment.component';
+import { EditEquipmentComponent } from './equipment/edit-equipment/edit-equipment.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +90,10 @@ import { ExportComponent } from './Export/export.component';
     ExecuteWorkoutComponent,
     SuccessWorkoutComponent,
     ImportComponent,
-    ExportComponent
+    ExportComponent,
+	EquipmentComponent,
+    EquipmentListItemComponent,
+    EditEquipmentComponent
   ],
   imports: [
 	FormsModule,

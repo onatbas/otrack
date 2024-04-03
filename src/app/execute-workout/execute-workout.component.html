@@ -43,17 +43,15 @@
 					currentStage.time ) + "s" }}</span></div>
 		</div>
 
-
-
 		<div *ngIf="!currentExercise.isBodyweight" class="repChange incrementModule">
 			<button (click)="addWeight(-1)" mat-icon-button><mat-icon>remove</mat-icon></button>
 			<button (click)="addWeight(+1)" mat-icon-button><mat-icon>add</mat-icon></button>
-			<div class="incrementModuleText"><span>{{currentExercise.weightDefault}}kg</span></div>
+			<div class="incrementModuleText"><span>{{currentExercise.weightDefault}}{{equipment.unit}}</span></div>
 		</div>
 	</div>
 
 	<div>
-		<span class="title">{{currentExercise.name}}</span>
+		<span [class]="this.stack || currentExercise.isBodyweight ? 'title': 'red title'">{{currentExercise.name}} <i>{{this.stack}}</i></span>
 		<br>
 		<label class="next">{{nextText}}</label>
 	</div>

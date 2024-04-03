@@ -1,0 +1,55 @@
+<mat-toolbar>
+	<button (click)="back()" mat-icon-button>
+		<mat-icon>keyboard_backspace</mat-icon>
+	</button>
+
+	<mat-form-field class="title">
+		<input matInput [(ngModel)]="equipment.name">
+	</mat-form-field>
+</mat-toolbar>
+
+
+<br>
+<mat-tab-group mat-stretch-tabs="true">
+	<mat-tab class="tab" label="Unit">
+		<div class="tab-content">
+			<input matInput matInput matNativeControl type="text" placeholder="kg" [(ngModel)]="equipment.unit">
+		</div>
+	</mat-tab>
+</mat-tab-group>
+
+
+<mat-tab-group mat-stretch-tabs="true">
+	<mat-tab class="tab" label="Empty Weight">
+		<div class="tab-content narrow">
+			<button (click)="changeDefaultWeight(-1)" mat-icon-button><mat-icon>remove</mat-icon></button>
+			<input matInput matInput matNativeControl type="number" [(ngModel)]="equipment.defaultWeight"><span> {{equipment.unit}}</span>
+			<button (click)="changeDefaultWeight(1)" mat-icon-button><mat-icon>add</mat-icon></button>
+		</div>
+	</mat-tab>
+</mat-tab-group>
+
+
+<mat-tab-group mat-stretch-tabs="true">
+	<mat-tab class="tab" label="Available Items">
+		<div class="tab-content ">
+			<input matInput matInput matNativeControl type="text" placeholder="10,15" [(ngModel)]="plates">
+		</div>
+	</mat-tab>
+</mat-tab-group>
+
+
+
+<mat-tab-group mat-stretch-tabs="true" [selectedIndex]="equipment.calculationMethod == 'Barbell' ? 0 : 1"
+	(selectedTabChange)="changeCalculationMethod($event)">
+
+	<mat-tab class="tab" label="Barbell"></mat-tab>
+	<mat-tab class="tab" label="Kettlebell"></mat-tab>
+</mat-tab-group>
+
+
+
+<mat-toolbar id="lower-menu">
+	<button (click)="save()" class="save" mat-stroked-button>Save</button>
+	<button (click)="delete()" class="exit" mat-stroked-button>Delete</button>
+</mat-toolbar>
