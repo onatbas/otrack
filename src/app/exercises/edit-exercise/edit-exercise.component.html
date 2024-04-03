@@ -9,46 +9,61 @@
 </mat-toolbar>
 
 <br>
-<mat-tab-group mat-stretch-tabs="true" [selectedIndex]="exercise.isReps ? 0 : 1" (selectedTabChange)="repsChanged($event)">
-	<mat-tab class="tab" label="REPS"><div class="tab-content">
-		<button (click)="changeRep(-1)" mat-icon-button><mat-icon>remove </mat-icon></button>
-		<input matNativeControl type="number" matInput [(ngModel)]="exercise.repsDefault"><span>x</span>
-		<button (click)="changeRep(1)" mat-icon-button><mat-icon>add</mat-icon></button>
-	</div></mat-tab>
-	<mat-tab class="tab" label="DURATION"><div class="tab-content">
-		<button (click)="changeDur(-1)" mat-icon-button><mat-icon>remove </mat-icon></button>
-		<input matInput  matNativeControl type="number" [(ngModel)]="exercise.durationDefault"><span>sec</span>
-		<button (click)="changeDur(1)" mat-icon-button><mat-icon>add</mat-icon></button>
-	</div></mat-tab>
-  </mat-tab-group>
+<mat-tab-group mat-stretch-tabs="true" [selectedIndex]="exercise.isReps ? 0 : 1"
+	(selectedTabChange)="repsChanged($event)">
+	<mat-tab class="tab" label="REPS">
+		<div class="tab-content">
+			<button (click)="changeRep(-1)" mat-icon-button><mat-icon>remove </mat-icon></button>
+			<input matNativeControl type="number" matInput [(ngModel)]="exercise.repsDefault"><span>x</span>
+			<button (click)="changeRep(1)" mat-icon-button><mat-icon>add</mat-icon></button>
+		</div>
+	</mat-tab>
+	<mat-tab class="tab" label="DURATION">
+		<div class="tab-content">
+			<button (click)="changeDur(-1)" mat-icon-button><mat-icon>remove </mat-icon></button>
+			<input matInput matNativeControl type="number" [(ngModel)]="exercise.durationDefault"><span>sec</span>
+			<button (click)="changeDur(1)" mat-icon-button><mat-icon>add</mat-icon></button>
+		</div>
+	</mat-tab>
+</mat-tab-group>
 
 
-  
+
 <br>
-<mat-tab-group mat-stretch-tabs="true" [selectedIndex]="exercise.isBodyweight ? 0 : 1" (selectedTabChange)="weightednessChanged($event)">
-	<mat-tab class="tab" label="BODYWEIGHT"><div class="tab-content">
-		</div></mat-tab>
-	<mat-tab class="tab" label="WEIGHTED"><div class="tab-content">
-		<button (click)="changeWeight(-1)" mat-icon-button><mat-icon>remove </mat-icon></button>
-		<input matInput  matInput matNativeControl type="number"  [(ngModel)]="exercise.weightDefault"><span>kg</span>
-		<button (click)="changeWeight(1)" mat-icon-button><mat-icon>add</mat-icon></button>
-	</div></mat-tab>
+<mat-tab-group mat-stretch-tabs="true" [selectedIndex]="exercise.isBodyweight ? 0 : 1"
+	(selectedTabChange)="weightednessChanged($event)">
+	<mat-tab class="tab" label="BODYWEIGHT">
+		<div class="tab-content">
+		</div>
+	</mat-tab>
+	<mat-tab class="tab" label="WEIGHTED">
+		<div class="tab-content">
+			<button (click)="changeWeight(-1)" mat-icon-button><mat-icon>remove </mat-icon></button>
+			<input matInput matInput matNativeControl type="number" [(ngModel)]="exercise.weightDefault"><span>kg</span>
+			<button (click)="changeWeight(1)" mat-icon-button><mat-icon>add</mat-icon></button>
+		</div>
+	</mat-tab>
 </mat-tab-group>
 
 
 <br>
-<mat-tab-group mat-stretch-tabs="true" [selectedIndex]="exercise.isFree ? 0 : 1" (selectedTabChange)="freenessChanged($event)">
-	<mat-tab class="tab" label="SINGLE"><div class="tab-content">
-		</div></mat-tab>
-	<mat-tab class="tab" label="MULTI SET"><div class="tab-content">
-	<!--<button (click)="changeSets(-1)" mat-icon-button><mat-icon>remove </mat-icon></button>-->	
-		<input matInput matNativeControl type="number" [(ngModel)]="exercise.sets"><span>sets</span>
-		<button (click)="changeSets(1)" mat-icon-button><mat-icon>add</mat-icon></button>
-	</div></mat-tab>
+<mat-tab-group mat-stretch-tabs="true" [selectedIndex]="exercise.isFree ? 0 : 1"
+	(selectedTabChange)="freenessChanged($event)">
+	<mat-tab class="tab" label="SINGLE">
+		<div class="tab-content">
+		</div>
+	</mat-tab>
+	<mat-tab class="tab" label="MULTI SET">
+		<div class="tab-content">
+			<!--<button (click)="changeSets(-1)" mat-icon-button><mat-icon>remove </mat-icon></button>-->
+			<input matInput matNativeControl type="number" [(ngModel)]="exercise.sets"><span>sets</span>
+			<button (click)="changeSets(1)" mat-icon-button><mat-icon>add</mat-icon></button>
+		</div>
+	</mat-tab>
 </mat-tab-group>
 
 
-  
+
 <mat-toolbar id="lower-menu">
 	<button (click)="save()" class="save" mat-stroked-button>Save</button>
 	<button (click)="delete()" class="exit" mat-stroked-button>Delete</button>

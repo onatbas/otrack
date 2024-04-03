@@ -3,14 +3,15 @@
 		<button (click)="back()" mat-icon-button>
 			<mat-icon>keyboard_backspace</mat-icon>
 		</button>
-		<span>Exercises</span>
+		<span>Equipment</span>
 	</mat-toolbar>
 
 	<div id="content">
 		<mat-list>
-			<app-exercise-list-item *ngFor="let exercise of exercises" [exercise]="exercise" [edit]="editMode">
-			</app-exercise-list-item>
+			<app-equipment-list-item *ngFor="let eq of equipment" [equipment]="eq" [edit]="editMode">
+			</app-equipment-list-item>
 		</mat-list>
+
 	</div>
 
 	<mat-toolbar id="lower-menu">
