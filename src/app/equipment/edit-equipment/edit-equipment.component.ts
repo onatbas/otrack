@@ -18,14 +18,14 @@ export class EditEquipmentComponent implements OnInit {
 		private location: Location
 	) { }
 
-	public name:string = "";
+	public oldName:string = "";
 	public equipment: EquipmentVO = new EquipmentVO();
 	public plates:string = "";
 
 	ngOnInit(): void {
 		this.route.params.subscribe(params => {
 			let name = params['name'];
-			this.name = name;
+			this.oldName = name;
 			console.log(name)
 			this.equipment = this.model.getEquipmentByName(String(name));
 			this.plates = this.equipment.numberArrayToString(this.equipment.unitValues);
@@ -34,13 +34,13 @@ export class EditEquipmentComponent implements OnInit {
 
 
 	delete(){
-		this.model.deleteEquipment(this.name);
+		this.model.deleteEquipment(this.oldName);
 		this.back();
 	}
 
 	save(){
 		this.equipment.unitValues = this.equipment.stringToNumberArray(this.plates);
-		this.model.updateEquipment(this.name, this.equipment);
+		this.model.updateEquipment(this.oldName, this.equipment);
 	}
 
 	back(){
