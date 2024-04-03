@@ -2,11 +2,14 @@
 			<mat-divider></mat-divider>
 <mat-list-item>
 
-			<span class="name">{{setItem.name}}</span>
+			<span class="name">{{setItem.name}} 	<i  *ngIf="!setItem.isBodyweight && !editMode">
+				({{setItem.weightDefault}} {{unit}})
+			</i></span>
 	<span class="icons" *ngIf="setItem.isFree && !editMode">
 		{{setItem.isReps ? (setItem.repsDefault + "x" ) : (setItem.durationDefault + " sec") }}
-
 	</span>
+
+
 
 	<span class="icons" *ngIf="!setItem.isFree && !editMode">
 		{{setItem.sets}} subsets
