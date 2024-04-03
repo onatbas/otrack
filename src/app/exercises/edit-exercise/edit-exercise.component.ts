@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ExerciseModel, ExerciseVO } from 'src/app/models/Exercise';
 import { Location } from '@angular/common';
 import { WorkoutModel } from 'src/app/models/Workouts';
+import { EquipmentModel, EquipmentVO } from 'src/app/models/Equipment';
 
 @Component({
 	selector: 'app-edit-exercise',
@@ -17,6 +18,7 @@ export class EditExerciseComponent implements OnInit {
 		private router: Router,
 		private exerciseModel: ExerciseModel,
 		private workoutModel: WorkoutModel,
+		private equipmentModel: EquipmentModel,
 		private location: Location
 	) { }
 
@@ -25,8 +27,10 @@ export class EditExerciseComponent implements OnInit {
 	instanced:boolean = false;
 	saveExerciseGlobal:boolean = false;
 	goBackOnSave:boolean = false;
+	equipment:string[] = [];
 
 	ngOnInit(): void {
+		this.equipment = this.equipmentModel.getEquipment().map(eq => eq.name);
 		this.route.params.subscribe(params => {
 			this.instanced = params['instanced'];
 			console.log(this.instanced)
@@ -51,7 +55,6 @@ export class EditExerciseComponent implements OnInit {
 			this.workoutModel.setExerciseInstance(this.exercise.id, this.exercise);
 
 			if (this.saveExerciseGlobal){
-
 				this.exerciseModel.updateExercise(this.exerciseModel.createBlankExercise().name, this.exercise);
 			}
 		}else
@@ -93,5 +96,9 @@ export class EditExerciseComponent implements OnInit {
 
 	changeWeight(num: number) {
 		this.exercise.weightDefault += num;
+	}
+
+	getUnit(){
+		return this.equipmentModel.getEquipmentByName(this.exercise.equipment).unit;
 	}
 }

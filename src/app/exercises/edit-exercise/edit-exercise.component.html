@@ -39,7 +39,7 @@
 	<mat-tab class="tab" label="WEIGHTED">
 		<div class="tab-content">
 			<button (click)="changeWeight(-1)" mat-icon-button><mat-icon>remove </mat-icon></button>
-			<input matInput matInput matNativeControl type="number" [(ngModel)]="exercise.weightDefault"><span>kg</span>
+			<input matInput matInput matNativeControl type="number" [(ngModel)]="exercise.weightDefault"><span>{{getUnit()}}</span>
 			<button (click)="changeWeight(1)" mat-icon-button><mat-icon>add</mat-icon></button>
 		</div>
 	</mat-tab>
@@ -62,6 +62,19 @@
 	</mat-tab>
 </mat-tab-group>
 
+
+<br>
+<mat-tab-group mat-stretch-tabs="true" >
+	<mat-tab class="tab" label="Equipment">
+		<div class="tab-content narrow">
+			<mat-form-field class="tab tab-content">
+				<mat-select class="narrow" [(value)]="exercise.equipment">
+					<mat-option *ngFor="let eq of equipment" value="{{eq}}">{{eq}}</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
+	</mat-tab>
+</mat-tab-group>
 
 
 <mat-toolbar id="lower-menu">

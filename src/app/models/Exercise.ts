@@ -20,6 +20,7 @@ export class ExerciseVO{
 	isFree:boolean = false;
 	sets:number = 0;
 	successes:Array<boolean> = [];
+	equipment:string = "";
 
 	clone(): ExerciseVO {
 		const clonedExercise = new ExerciseVO();
@@ -34,6 +35,7 @@ export class ExerciseVO{
 		clonedExercise.isFree = this.isFree;
 		clonedExercise.sets = this.sets;
 		clonedExercise.successes = this.successes;
+		clonedExercise.equipment = this.equipment;
 	
 		return clonedExercise;
 	  }
@@ -82,7 +84,8 @@ export class ExerciseModel{
 		isDuration: true,
 		durationDefault: 90,
 		isFree: true,
-		isBodyweight: true
+		isBodyweight: true,
+		unit: null
 	})];
 
 	getExercises():Array<ExerciseVO>{
