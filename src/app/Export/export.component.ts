@@ -3,6 +3,7 @@ import { WorkoutModel, WorkoutVO } from '../models/Workouts';
 import { ExerciseModel, ExerciseVO } from '../models/Exercise';
 import {Clipboard} from '@angular/cdk/clipboard';
 import { Location } from '@angular/common';
+import { EquipmentModel, EquipmentVO } from '../models/Equipment';
 
 @Component({
   selector: 'app-export',
@@ -14,22 +15,26 @@ export class ExportComponent implements OnInit {
   constructor(
 	private workout:WorkoutModel,
 	private exercise:ExerciseModel,
+	private equipment:EquipmentModel,
 	private clipboard: Clipboard,
 	private location:Location
   ) { }
 
   includeExercises:boolean = true;
   includeWorkouts:boolean = true;
+  includeEquipment:boolean = true;
 
   content:String = "";
 
   workoutChosen:Map<String, boolean> = new Map<String, boolean>();
   workouts:Array<WorkoutVO> = [];
   exercises:Array<ExerciseVO> = [];
+  equipments:Array<EquipmentVO> = [];
 
   ngOnInit(): void {
 	this.workouts = this.workout.getWorkouts();
 	this.exercises = this.exercise.getExercises();
+	this.equipments = this.equipment.getEquipment();
 
 	this.workouts.forEach(w =>
 		this.workoutChosen.set(w.name, true));
@@ -55,12 +60,19 @@ export class ExportComponent implements OnInit {
 	this.createContent();
   }
 
+  toggleIncludeEquipment(){
+	this.includeEquipment = !this.includeEquipment;
+	this.createContent();
+  }
+
   createContent(){
 	var object:any = {};
 	if (this.includeWorkouts)
 	object.workouts = this.workouts.filter(w=>this.workoutChosen.get(w.name) == true);
 	if (this.includeExercises)
 	object.exercises = this.exercises;
+	if (this.includeEquipment)
+	object.equipment = this.equipments;
 
 	this.content = JSON.stringify(object);
   }
