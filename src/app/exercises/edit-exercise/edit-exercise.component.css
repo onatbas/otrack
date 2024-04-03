@@ -35,3 +35,11 @@
 	overflow-y: hidden;
 
 }
+
+.weighted{
+	height: 100px;
+}
+
+.red{
+	color:red;
+}

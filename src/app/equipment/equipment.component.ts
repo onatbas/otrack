@@ -32,10 +32,15 @@ export class EquipmentComponent implements OnInit {
 			console.log(params['state']);
 			//handle state
 		});
+
+		
+		this.model.equipmentChanged.subscribe(() => {
+			this.equipment = this.model.getEquipment();
+		});
 	}
 
 	edit(){
-
+		this.editMode = !this.editMode;
 	}
 
 

@@ -28,7 +28,7 @@ export class EditEquipmentComponent implements OnInit {
 			this.name = name;
 			console.log(name)
 			this.equipment = this.model.getEquipmentByName(String(name));
-			this.plates = this.numberArrayToString(this.equipment.unitValues);
+			this.plates = this.equipment.numberArrayToString(this.equipment.unitValues);
 		});
 	}
 
@@ -39,7 +39,7 @@ export class EditEquipmentComponent implements OnInit {
 	}
 
 	save(){
-		this.equipment.unitValues = this.stringToNumberArray(this.plates);
+		this.equipment.unitValues = this.equipment.stringToNumberArray(this.plates);
 		this.model.updateEquipment(this.name, this.equipment);
 	}
 
@@ -50,18 +50,6 @@ export class EditEquipmentComponent implements OnInit {
 
 	changeDefaultWeight(num: number){
 		this.equipment.defaultWeight += num;
-	}
-
-	 stringToNumberArray(inputString: string) {
-		const numericString = inputString.replace(/[^0-9,\.]/g, '');
-		const numberArray = numericString.split(',').map(Number);
-		return numberArray;
-	}
-	
-	 numberArrayToString(numberArray: number[]) {
-		const filteredArray = numberArray.filter(num => !isNaN(num));
-		const resultString = filteredArray.join(',');
-		return resultString;
 	}
 
 

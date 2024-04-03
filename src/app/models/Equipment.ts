@@ -53,7 +53,10 @@ export class EquipmentVO {
 		return list;
 	  }
 	
-	  findPlatesForWeight(targetWeight: number): number[] | null {
+	  findPlatesForWeight(targetWeight: number): number[] {
+		if (this.calculationMethod == CalculationMethod.Kettlebell)
+			return this.unitValues.includes(targetWeight) ? [targetWeight] : [];
+
 		let sideTarget = (targetWeight - this.defaultWeight) / 2; // Calculate per side target
 		let combinations = this.generateCombinations(this.unitValues, sideTarget);
 		if (combinations.length > 0) {
@@ -61,8 +64,22 @@ export class EquipmentVO {
 		  combinations.sort((a, b) => a.length - b.length);
 		  return combinations[0]; // Return the first combination (or another logic)
 		}
-		return null; // Return null or an appropriate value if no combination is found
+		return []; // Return null or an appropriate value if no combination is found
 	  }
+
+	  
+	 stringToNumberArray(inputString: string) {
+		const numericString = inputString.replace(/[^0-9,\.]/g, '');
+		const numberArray = numericString.split(',').map(Number);
+		return numberArray;
+	}
+	
+	 numberArrayToString(numberArray: number[]) {
+		const filteredArray = numberArray.filter(num => !isNaN(num));
+		const resultString = filteredArray.join(',');
+		return resultString;
+	}
+
 	  
   }
   
@@ -110,19 +127,23 @@ export class EquipmentModel {
   }
 
   createBlankEquipment(): EquipmentVO {
-    var equipment = new EquipmentVO();
-    equipment.name = "Equipment-" + this.equipmentList.length;
-    this.equipmentList.push(equipment);
-    this.save();
-    return equipment;
+    return EquipmentVO.from({
+		unit: "lb",
+		name: "Equipment-" + this.equipmentList.length
+	});
   }
 
   updateEquipment(name: String, updated: EquipmentVO) {
+	let found = false;
     for (var index in this.equipmentList) {
       if (this.equipmentList[index].name === name) {
         this.equipmentList[index] = updated;
+		found = true;
       }
     }
+	if (!found)
+		this.equipmentList.push(updated);
+
     this.equipmentChanged.next(true);
     this.save();
   }

@@ -28,6 +28,7 @@ export class EditExerciseComponent implements OnInit {
 	saveExerciseGlobal:boolean = false;
 	goBackOnSave:boolean = false;
 	equipment:string[] = [];
+	stack:string = "";
 
 	ngOnInit(): void {
 		this.equipment = this.equipmentModel.getEquipment().map(eq => eq.name);
@@ -43,6 +44,8 @@ export class EditExerciseComponent implements OnInit {
 
 			this.saveExerciseGlobal = params["saveExerciseGlobal"];
 			this.goBackOnSave = params["goBackOnSave"];
+
+			this.recalculateStack();
 		});
 	}
 
@@ -77,6 +80,7 @@ export class EditExerciseComponent implements OnInit {
 
 	weightednessChanged(event: MatTabChangeEvent) {
 		this.exercise.isBodyweight = event.index === 0;
+		this.recalculateStack();
 	}
 
 	freenessChanged(event: MatTabChangeEvent) {
@@ -96,6 +100,15 @@ export class EditExerciseComponent implements OnInit {
 
 	changeWeight(num: number) {
 		this.exercise.weightDefault += num;
+		this.recalculateStack();
+	}
+
+	recalculateStack(){
+		this.stack = "";
+		let currentEquipment = this.equipmentModel.getEquipmentByName(this.exercise.equipment);
+		let plates = currentEquipment.findPlatesForWeight(this.exercise.weightDefault);
+		if (!this.exercise.isBodyweight)
+			this.stack = currentEquipment.numberArrayToString(currentEquipment.findPlatesForWeight(this.exercise.weightDefault));
 	}
 
 	getUnit(){
