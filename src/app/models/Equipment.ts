@@ -66,6 +66,10 @@ export class EquipmentVO {
 			return this.unitValues.includes(targetWeight) ? [targetWeight] : [];
 
 		let sideTarget = (targetWeight - this.defaultWeight) / 2; // Calculate per side target
+		if (sideTarget == 0){
+			return [0];
+		}
+
 		let combinations = this.generateCombinations(this.unitValues.sort((a, b) => b - a), sideTarget);
 		if (combinations.length > 0) {
 		  // Assuming you want the combination with the least plates
