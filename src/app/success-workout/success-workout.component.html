@@ -50,7 +50,7 @@
 							*ngFor="let success of exercise.successes">
 							<span *ngIf="exercise.isDuration">{{exercise.durationDefault}}s </span>
 							<span *ngIf="exercise.isReps">{{exercise.repsDefault}}x </span>
-							<span *ngIf="!exercise.isBodyweight">{{exercise.weightDefault}}kg </span>
+							<span *ngIf="!exercise.isBodyweight">({{exercise.weightDefault}} {{getExerciseUnit(exercise)}}) </span>
 						</p>
 					</div>
 				</mat-list-item>

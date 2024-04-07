@@ -5,6 +5,8 @@ import { SuccessStates, WorkoutModel } from '../models/Workouts';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ExerciseVO } from '../models/Exercise';
+import { EquipmentModel } from '../models/Equipment';
 
 @Component({
   selector: 'app-success-workout',
@@ -16,7 +18,8 @@ export class SuccessWorkoutComponent implements OnInit {
   constructor(
 	private router:Router,
 	private route:ActivatedRoute,
-	private workoutModel:WorkoutModel
+	private workoutModel:WorkoutModel,
+	private equipmentModel:EquipmentModel
   ) {
 	
   }
@@ -66,6 +69,9 @@ export class SuccessWorkoutComponent implements OnInit {
 	this.workoutModel.updateWorkout(this.workoutState.workout.name, this.workoutState.workout);
   }
 
+  getExerciseUnit(exercise:ExerciseVO){
+	return this.equipmentModel.getEquipmentByName(exercise.equipment).unit;
+  }
 
   onSuccessChange(){
 	var copyWorkout = this.workoutModel.getWorkoutByName(this.workoutState.workout.name);

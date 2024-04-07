@@ -304,8 +304,12 @@ export class ExecuteWorkoutComponent implements OnInit {
 			this.final = false;
 			const next = exercises_list[stageNum + 1];
 			this.nextText = (next.isDuration ? next.durationDefault + "s" : next.repsDefault + "x") +
-				" " + (next.isBodyweight ? "" : next.weightDefault + "kg ") + next.name;
+				" " + (next.isBodyweight ? "" : next.weightDefault + "" + this.getExerciseUnit(next) + " ") + next.name;
 		}
+	}
+
+	getExerciseUnit(exercise:ExerciseVO){
+		return this.equipmentModel.getEquipmentByName(exercise.equipment).unit;
 	}
 
 	hour() {
