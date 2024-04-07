@@ -22,6 +22,15 @@
 			class="check">check_box_outline_blank</mat-icon> Workouts excluded</button>
 </div>
 
+
+<div>
+	<button *ngIf="includeEquipment" (click)="toggleIncludeEquipment()" mat-stroked-button><mat-icon
+			class="check">check_box</mat-icon> Equipment included</button>
+	<button *ngIf="!includeEquipment" (click)="toggleIncludeEquipment()" mat-stroked-button><mat-icon
+			class="check">check_box_outline_blank</mat-icon> Equipment excluded</button>
+</div>
+
+
 <br/>
 <textarea [(ngModel)]="content"></textarea>
 <br/>
@@ -40,4 +49,10 @@
 <ul *ngIf="exerciseList.length > 0">
 	Exercises<br/>
 	<li *ngFor="let exercise of exerciseList">{{exercise.name}}</li>
+</ul>
+<br/>
+
+<ul *ngIf="equipmentList.length > 0">
+	Equipment<br/>
+	<li *ngFor="let eq of equipmentList">{{eq.name}}</li>
 </ul>

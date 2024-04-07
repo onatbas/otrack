@@ -17,7 +17,6 @@
 </div>
 
 <br />
-
 <div>
 	<button *ngIf="includeWorkouts" (click)="toggleIncludeWorkouts()" mat-stroked-button><mat-icon
 			class="check">check_box</mat-icon> Workouts included</button>
@@ -25,11 +24,17 @@
 			class="check">check_box_outline_blank</mat-icon> Workouts excluded</button>
 </div>
 
-<div id="content">
+<br />
+<div>
+	<button *ngIf="includeEquipment" (click)="toggleIncludeEquipment()" mat-stroked-button><mat-icon
+			class="check">check_box</mat-icon> Equipment included</button>
+	<button *ngIf="!includeEquipment" (click)="toggleIncludeEquipment()" mat-stroked-button><mat-icon
+			class="check">check_box_outline_blank</mat-icon> Equipment excluded</button>
+</div>
 
+<div id="content">
 <ul *ngIf="includeWorkouts">
 	<button (click)="toggleAll()" mat-stroked-button>Toggle All</button>
-
 	<li *ngFor="let workout of workouts">
 
 		<input type="checkbox" (click)="toggleChosen(workout.name, true)" [checked]="workoutChosen.get(workout.name)" />

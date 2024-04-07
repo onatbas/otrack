@@ -25,7 +25,6 @@ export class MenuComponent implements OnInit {
 
   exercises():void{
 	this.router.navigate(['/exercises']);
-
   }
 
   workouts():void{
@@ -38,5 +37,9 @@ export class MenuComponent implements OnInit {
 
   import():void{
 	this.router.navigate(['/import']);
+  }
+
+  equipment():void{
+	this.router.navigate(['/equipment']);
   }
 }

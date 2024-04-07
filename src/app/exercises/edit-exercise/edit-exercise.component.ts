@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ExerciseModel, ExerciseVO } from 'src/app/models/Exercise';
 import { Location } from '@angular/common';
 import { WorkoutModel } from 'src/app/models/Workouts';
+import { EquipmentModel, EquipmentVO } from 'src/app/models/Equipment';
 
 @Component({
 	selector: 'app-edit-exercise',
@@ -17,6 +18,7 @@ export class EditExerciseComponent implements OnInit {
 		private router: Router,
 		private exerciseModel: ExerciseModel,
 		private workoutModel: WorkoutModel,
+		private equipmentModel: EquipmentModel,
 		private location: Location
 	) { }
 
@@ -25,8 +27,11 @@ export class EditExerciseComponent implements OnInit {
 	instanced:boolean = false;
 	saveExerciseGlobal:boolean = false;
 	goBackOnSave:boolean = false;
+	equipment:string[] = [];
+	stack:string = "";
 
 	ngOnInit(): void {
+		this.equipment = this.equipmentModel.getEquipment().map(eq => eq.name);
 		this.route.params.subscribe(params => {
 			this.instanced = params['instanced'];
 			console.log(this.instanced)
@@ -39,6 +44,8 @@ export class EditExerciseComponent implements OnInit {
 
 			this.saveExerciseGlobal = params["saveExerciseGlobal"];
 			this.goBackOnSave = params["goBackOnSave"];
+
+			this.recalculateStack();
 		});
 	}
 
@@ -51,7 +58,6 @@ export class EditExerciseComponent implements OnInit {
 			this.workoutModel.setExerciseInstance(this.exercise.id, this.exercise);
 
 			if (this.saveExerciseGlobal){
-
 				this.exerciseModel.updateExercise(this.exerciseModel.createBlankExercise().name, this.exercise);
 			}
 		}else
@@ -74,6 +80,7 @@ export class EditExerciseComponent implements OnInit {
 
 	weightednessChanged(event: MatTabChangeEvent) {
 		this.exercise.isBodyweight = event.index === 0;
+		this.recalculateStack();
 	}
 
 	freenessChanged(event: MatTabChangeEvent) {
@@ -93,5 +100,18 @@ export class EditExerciseComponent implements OnInit {
 
 	changeWeight(num: number) {
 		this.exercise.weightDefault += num;
+		this.recalculateStack();
+	}
+
+	recalculateStack(){
+		this.stack = "";
+		let currentEquipment = this.equipmentModel.getEquipmentByName(this.exercise.equipment);
+		let plates = currentEquipment.findPlatesForWeight(this.exercise.weightDefault);
+		if (!this.exercise.isBodyweight)
+			this.stack = currentEquipment.numberArrayToString(currentEquipment.findPlatesForWeight(this.exercise.weightDefault));
+	}
+
+	getUnit(){
+		return this.equipmentModel.getEquipmentByName(this.exercise.equipment).unit;
 	}
 }
