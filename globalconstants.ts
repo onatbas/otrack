@@ -1,5 +1,5 @@
 
 export const GLOBALCONSTANTS = {
-	version: "1.2.3b23df3"
+	version: "1.5.0.f6e714f"
 }
 

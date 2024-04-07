@@ -31,7 +31,7 @@
 </button>
 
 
-<div class="lower_menu">
+<div class="middle_menu">
 	<div>
 		<div class="repChange incrementModule">
 			<button [style.visibility]="!currentExercise.isReps" (click)="addReps(-1)"
@@ -49,11 +49,17 @@
 			<div class="incrementModuleText"><span>{{currentExercise.weightDefault}}{{equipment.unit}}</span></div>
 		</div>
 	</div>
+</div>
+
+<div class="lower_menu">
+
 
 	<div>
-		<span [class]="this.stack || currentExercise.isBodyweight ? 'title': 'red title'">{{currentExercise.name}} <i>{{this.stack}}</i></span>
+		<span [class]="this.stack || currentExercise.isBodyweight ? 'title': 'red title'">{{currentExercise.name}} <i class="stack">{{this.stack}}</i></span>
 		<br>
-		<label class="next">{{nextText}}</label>
+		<div class="nextbox"> <!--For css nth child rules-->
+			<span *ngFor="let n of nextText" class="next">{{n}}</span>
+		</div>
 	</div>
 
 	<div class="box_empty box">

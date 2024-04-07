@@ -53,15 +53,28 @@ export class EquipmentVO {
 		return list;
 	  }
 	
+	  sortArraysByCubedSums(arrays:number[][]) { // this is to bias the use of heavier plates. This makes loading easier during transitional weights.
+		return arrays.sort((a, b) => {
+		  const sumCubesA = a.reduce((sum, current) => sum + current ** 3, 0);
+		  const sumCubesB = b.reduce((sum, current) => sum + current ** 3, 0);
+		  return sumCubesB - sumCubesA;
+		});
+	  }
+
 	  findPlatesForWeight(targetWeight: number): number[] {
 		if (this.calculationMethod == CalculationMethod.Kettlebell)
 			return this.unitValues.includes(targetWeight) ? [targetWeight] : [];
 
 		let sideTarget = (targetWeight - this.defaultWeight) / 2; // Calculate per side target
-		let combinations = this.generateCombinations(this.unitValues, sideTarget);
+		if (sideTarget == 0){
+			return [0];
+		}
+
+		let combinations = this.generateCombinations(this.unitValues.sort((a, b) => b - a), sideTarget);
 		if (combinations.length > 0) {
 		  // Assuming you want the combination with the least plates
-		  combinations.sort((a, b) => a.length - b.length);
+		  combinations = this.sortArraysByCubedSums(combinations); //combinations.sort((a, b) => a.length - b.length);
+		  console.log(combinations);
 		  return combinations[0]; // Return the first combination (or another logic)
 		}
 		return []; // Return null or an appropriate value if no combination is found
@@ -117,7 +130,16 @@ export class EquipmentModel {
   }
 
   getEquipment(): Array<EquipmentVO> {
-    return JSON.parse(JSON.stringify(this.equipmentList));
+	let found:string[] = [];
+
+	// @ts-ignore
+	const removeDuplicates = arr => arr.map(item => [item.name, item])	// @ts-ignore
+								.reduce((acc, [name, item]) => acc.set(name, item), new Map())
+								.values();
+
+	const result = Array.from(removeDuplicates(this.equipmentList));
+
+    return JSON.parse(JSON.stringify(result));
   }
 
   deleteEquipment(name: String) {

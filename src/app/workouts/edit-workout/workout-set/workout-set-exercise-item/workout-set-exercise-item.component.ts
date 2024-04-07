@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { EquipmentModel } from 'src/app/models/Equipment';
 import { ExerciseModel, ExerciseVO } from 'src/app/models/Exercise';
 
 
@@ -22,18 +23,22 @@ export class WorkoutSetExerciseItemComponent implements OnInit {
 
 	constructor(
 		private exerciseModel: ExerciseModel,
+		private equipmentModel:EquipmentModel,
 		private router:Router
 	) { }
 
 	@Output() deleteExercise = new EventEmitter<String>();
 	@Output() moveExercise = new EventEmitter<MoveExerciseData>();
+
 	@Input() editMode: boolean = false;
 	@Input() setItem: ExerciseVO = new ExerciseVO();
-
 	@Input() index:number = 0;
 	@Input() total:Number = 0;
 
-	ngOnInit(): void {}
+	public unit:string = "";
+	ngOnInit(): void {
+		this.unit = this.equipmentModel.getEquipmentByName(this.setItem.equipment).unit;
+	}
 
 	delete(){
 		this.deleteExercise.emit(this.setItem.id);

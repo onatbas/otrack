@@ -69,7 +69,7 @@ export class ExecuteWorkoutComponent implements OnInit {
 	message: String = "";
 
 	percentage: number = 0;
-	nextText: String = "";
+	nextText: String[] = [];
 	success: boolean = true;
 	final: boolean = false;
 	showHelp: boolean = false;
@@ -295,17 +295,32 @@ export class ExecuteWorkoutComponent implements OnInit {
 
 		console.log(exercises_list);
 		console.log(stageNum);
-		this.currentExercise = exercises_list[stageNum];
-
-		if (exercises_list.length - 1 == stageNum) {
-			this.nextText = "Final";
+		if (stageNum == exercises_list.length - 1){
 			this.final = true;
-		} else {
-			this.final = false;
-			const next = exercises_list[stageNum + 1];
-			this.nextText = (next.isDuration ? next.durationDefault + "s" : next.repsDefault + "x") +
-				" " + (next.isBodyweight ? "" : next.weightDefault + "" + this.getExerciseUnit(next) + " ") + next.name;
+
+		}else this.final = false;
+		this.currentExercise = exercises_list[stageNum];
+		this.nextText = [];
+		this.updateNextExercises(exercises_list, stageNum+1, 5);
+	}
+
+
+	updateNextExercises(exercises_list:ExerciseVO[], stageNum:number, numberOfExercisesToShow = 2) {
+		if (numberOfExercisesToShow === 0)
+			return;
+	
+		if (stageNum === exercises_list.length) {
+			this.nextText.push("Final");
+			return;
 		}
+	
+		const nextExercise = exercises_list[stageNum];
+		const exerciseText = (nextExercise.isDuration ? nextExercise.durationDefault + "s" : nextExercise.repsDefault + "x") +
+			" " + (nextExercise.isBodyweight ? "" : nextExercise.weightDefault + "" + this.getExerciseUnit(nextExercise) + " ") + nextExercise.name;
+		this.nextText.push(exerciseText);
+	
+		// Recursive call: Decrement `numberOfExercisesToShow` and increment `stageNum` to process the next exercise
+		this.updateNextExercises(exercises_list, stageNum + 1, numberOfExercisesToShow - 1);
 	}
 
 	getExerciseUnit(exercise:ExerciseVO){
